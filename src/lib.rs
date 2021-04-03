@@ -57,6 +57,18 @@ impl BitFlags {
 
 const DEVICE_ADDRESS: u8 = 0x51;
 
+/// Control states
+#[allow(non_camel_case_types)]
+#[derive(Copy, Clone, Debug)]
+
+/// Two possible choices, used for various enable/disable bit flags
+pub enum Control {    
+    /// Enable some feature, eg. timer 
+    Enable, 
+    /// Disable some feature, eg. timer
+    Disable,     
+}
+
 /// PCF8563 driver
 #[derive(Debug, Default)]
 pub struct PCF8563<I2C> {
@@ -72,6 +84,7 @@ mod control;
 pub use datetime::DateTime;
 pub use timer::TimerFreq;
 pub use clkout::ClkoutFreq;
+pub use control::InterruptOutput;
 
 impl <I2C, E> PCF8563<I2C>
 where 

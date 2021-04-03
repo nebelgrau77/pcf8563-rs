@@ -1,6 +1,6 @@
 //! All timer-related functions will be defined here
 
-use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
+use super::{PCF8563, DEVICE_ADDRESS, hal, Error, Register, BitFlags, Control, encode_bcd, decode_bcd};
 use hal::blocking::i2c::{Write, WriteRead};
 
 /// The four possible timer frequency settings
@@ -47,6 +47,19 @@ where
         self.write_register(Register::TIMER_CTRL, data)
     }
 
+    /// Control timer interrupt
+    pub fn control_timer(&mut self, flag: Control) -> Result<(), Error<E>> {
+        match flag {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)       
+                }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)
+                }
+            }
+        }
+
+    /*
     /// Enable timer
     pub fn enable_timer(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)
@@ -56,7 +69,21 @@ where
        pub fn disable_timer(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)
     }
+    */
 
+    /// Control timer interrupt
+    pub fn control_timer_interrupt(&mut self, flag: Control) -> Result<(), Error<E>> {
+        match flag {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)
+            }
+        }
+    }
+
+    /*
     /// Enable timer interrupt
      pub fn enable_timer_interrupt(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)
@@ -66,6 +93,7 @@ where
     pub fn disable_timer_interrupt(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)
     }
+    */
 
     /// Clear timer flag
     pub fn clear_timer_flag(&mut self) -> Result<(), Error<E>> {

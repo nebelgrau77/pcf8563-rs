@@ -3,7 +3,7 @@
 //! As it is now, setting an alarm component (minutes, hours, day, weekday) enables alarm for this component
 //! TO DO: Keep the enabled/disabled bit when setting the alarm components (minutes, hours, day, weekday)
 
-use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
+use super::{PCF8563, DEVICE_ADDRESS, hal, Error, Register, BitFlags, Control, encode_bcd, decode_bcd};
 use hal::blocking::i2c::{Write, WriteRead};
 
 impl<I2C, E> PCF8563<I2C>
@@ -42,7 +42,22 @@ where
         }
         self.write_register(Register::WEEKDAY_ALARM, encode_bcd(weekday))
     }
-     
+    
+    
+    /// Control alarm minutes
+    pub fn control_alarm_minutes(&mut self, status: Control) -> Result<(), Error<E>> {
+        match status {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
+            }
+        }
+    }
+    
+    /*
+
     /// Disable alarm minutes    
     pub fn disable_alarm_minutes(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
@@ -53,6 +68,21 @@ where
         self.clear_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
     }
 
+    */
+
+    /// Control alarm hours
+    pub fn control_alarm_hours(&mut self, status: Control) -> Result<(), Error<E>> {
+        match status {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
+            }
+        }
+    }
+
+    /*
     /// Disable alarm hours
     pub fn disable_alarm_hours(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
@@ -62,7 +92,21 @@ where
     pub fn enable_alarm_hours(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
     }
+    */
 
+    /// Control alarm day
+    pub fn control_alarm_day(&mut self, status: Control) -> Result<(), Error<E>> {
+        match status {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
+            }
+        }
+    }
+
+    /*
     /// Disable alarm day
     pub fn disable_alarm_day(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
@@ -72,7 +116,21 @@ where
     pub fn enable_alarm_day(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
     }
+    */
 
+     /// Control alarm weekday
+     pub fn control_alarm_weekday(&mut self, status: Control) -> Result<(), Error<E>> {
+        match status {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::WEEkDAY_ALARM, BitFlags::AE)
+            }
+        }
+    }
+
+    /*
     /// Disable alarm weekday
     pub fn disable_alarm_weekday(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
@@ -82,8 +140,22 @@ where
     pub fn enable_alarm_weekday(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
     }
+    */
 
-     /// Enable alarm interrupt
+    /// Control alarm interrupt
+    pub fn control_alarm_interrupt(&mut self, status: Control) -> Result<(), Error<E>> {
+        match status {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)
+            }
+        }
+    }
+
+    /*
+    /// Enable alarm interrupt
      pub fn enable_alarm_interrupt(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)
     }
@@ -92,10 +164,14 @@ where
     pub fn disable_alarm_interrupt(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)
     }
+    */
+
 
     /// Clear alarm flag
     pub fn clear_alarm_flag(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AF)
     }
+
+
 
 }

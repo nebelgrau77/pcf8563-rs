@@ -10,6 +10,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ...
 
 
+## 0.0.2 - 2021-04-03
+
+### Added 
+- Single functions for enable/disable of various bit flags (alarm components, timer and alarm interrupts, clock output)
+- Single function for starting/stopping the clock
+- Continuous/pulsating output of the timer interrupt
+
+### Removed
+- All the enable_ and disable_ functions, replaced by control_ functions
+
+
 ## 0.0.1 - 2021-04-03
 
 ### Added

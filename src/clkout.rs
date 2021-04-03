@@ -1,6 +1,6 @@
 //! All clock output-related functions will be defined here
 
-use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
+use super::{PCF8563, DEVICE_ADDRESS, hal, Error, Register, BitFlags, Control, encode_bcd, decode_bcd};
 use hal::blocking::i2c::{Write, WriteRead};
 
 /// The four possible clock output frequency settings
@@ -41,6 +41,19 @@ where
         self.write_register(Register::CLKOUT_CTRL, data)
     }
     
+    /// Enable or disable clock output
+    pub fn control_clkout(&mut self, status: Control) -> Result<(), Error<E>> {
+        match status {
+            Control::Enable => {
+                self.set_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)       
+            }
+            Control::Disable => {
+                self.clear_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
+            }
+        }
+    }
+
+    /*
     /// Enable clock output
     pub fn enable_clkout(&mut self) -> Result<(), Error<E>> {
         self.set_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
@@ -50,5 +63,6 @@ where
        pub fn disable_clkout(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
     }
+    */
 
 }
