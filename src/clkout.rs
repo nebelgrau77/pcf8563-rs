@@ -1,3 +1,5 @@
+//! All clock output-related functions will be defined here
+
 use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
 use hal::blocking::i2c::{Write, WriteRead};
 

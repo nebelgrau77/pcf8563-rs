@@ -24,7 +24,7 @@ This driver allows you to:
 [x] clear alarm flag
 [x] enable/disable alarm interrupt
 [] start/stop clock output  
-[] set clock output frequency  
+[x] set clock output frequency  
 [] get clock output frequency  
 [x] clear timer flag
 [x] start/stop timer  

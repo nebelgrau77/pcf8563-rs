@@ -53,13 +53,6 @@ impl BitFlags {
     const AE                    : u8 = 0b1000_0000; // alarm enable/disable for all four settings
     const TE                    : u8 = 0b1000_0000; // timer enable/disable
     const FE                    : u8 = 0b1000_0000; // clockout enable/disable
-
-    //const CLKOUT_OFF        : u8 = 0b0000_0000; 
-    //const CLKOUT_32KHZ      : u8 = 0b1000_0000; // CLKOUT activated and set to some frequency
-    //const CLKOUT_1KHZ       : u8 = 0b1000_0001;
-    //const CLKOUT_32HZ       : u8 = 0b1000_0010;
-    //const CLKOUT_1HZ        : u8 = 0b1000_0011;    
-
     }   
 
 const DEVICE_ADDRESS: u8 = 0x51;
@@ -102,14 +95,13 @@ where
 
     // do I need WriteRead, or maybe just Read here?
 
-    /// Read from a register. Buffer is big enough to contain the whole datetime.
+    /// Read from a register 
     fn read_register(&mut self, register: u8) -> Result<u8, Error<E>> {
         let mut data = [0]; //need to figure out sending whole datetime
         self.i2c
             .write_read(DEVICE_ADDRESS, &[register], &mut data)
             .map_err(Error::I2C)
-            .and(Ok(data[0])) //how should this work???
-
+            .and(Ok(data[0]))
     }
 
     /// Check if specific bits are set
@@ -118,7 +110,7 @@ where
         Ok((data & bitmask) != 0)
     }
 
-    /// Sets specific bits
+    /// Set specific bits
     fn set_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
         if (data & bitmask) == 0 { // does it mean that they are different if 0?
@@ -153,8 +145,6 @@ fn encode_bcd(input: u8) -> u8 {
     let tens = tens << 4;
     tens + digits
     }
-
-
 
 #[cfg(test)]
 mod tests {

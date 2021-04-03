@@ -1,3 +1,11 @@
+//! All date and time-related functions will be defined here.
+//! 
+//! Reading and setting single elements (seconds, hours, months) will NOT be implemented
+//! following the recommendations in the NXP datasheet to set and read all the seven date and time registers in one go.
+//! 
+//! TO DO: As the chip may be used for devices that are clocks only, without the calendar function
+//! a convenient set_time() function could be added (sets only seconds, minutes and hours)
+
 use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
 //use embedded_hal as hal;
 use hal::blocking::i2c::{Write, WriteRead};
@@ -25,17 +33,7 @@ impl<I2C, E> PCF8563<I2C>
 where
     I2C: Write<Error = E> + WriteRead<Error = E>, 
 {
-    /* Reading single elements won't be implemented, following the recommendations
-    of the NXP datasheet and application notes for the chip, to read and write the date
-    and time in one go.
-
-    /// Read the seconds.
-    pub fn get_seconds(&mut self) -> Result<u8, Error<E>> {
-        let data = self.read_register(Register::VL_SECONDS)?;
-        Ok(decode_bcd(data))
-    }
-     */
-
+ 
     /// Read date and time all at once.
     pub fn get_datetime(&mut self) -> Result<DateTime, Error<E>> {
         let mut data = [0;7];

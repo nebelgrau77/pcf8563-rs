@@ -1,37 +1,15 @@
+//! All alarm-related functions will be defined here
+//! 
+//! As it is now, setting an alarm component (minutes, hours, day, weekday) enables alarm for this component
+//! TO DO: Keep the enabled/disabled bit when setting the alarm components (minutes, hours, day, weekday)
+
 use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
 use hal::blocking::i2c::{Write, WriteRead};
-
-/*
-
-// this won't work, as the bit must be either set to 1, or cleared to 0
-
-struct AlarmCtrl;
-
-impl AlarmCtrl {
-    const ENABLE:      u8 = 0b0000_0000;
-    const DISABLE:     u8 = 0b1000_0000;
-}
-
-*/
 
 impl<I2C, E> PCF8563<I2C>
 where
     I2C: Write<Error = E> + WriteRead<Error = E>, 
 {
-
-    // to enable the alarm bit 7 must be cleared (default value 0)
-    // the way these functions work, setting the value will also clear the bit
-    // and enable the alarm
-    // what's the best way to do it: make separate enable/disable function for hours, minutes etc.
-
-
-    // it may be better to just set the alarm but without enabling it
-    // for that the status must be read
-
-    //pub fn get_alarm_status()
-
-   
-
 
     /// Set the alarm minutes [0-59]
     pub fn set_alarm_minutes(&mut self, minutes: u8) -> Result<(), Error<E>> {
@@ -64,7 +42,6 @@ where
         }
         self.write_register(Register::WEEKDAY_ALARM, encode_bcd(weekday))
     }
-  
      
     /// Disable alarm minutes    
     pub fn disable_alarm_minutes(&mut self) -> Result<(), Error<E>> {
@@ -120,6 +97,5 @@ where
     pub fn clear_alarm_flag(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AF)
     }
-
 
 }
