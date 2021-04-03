@@ -15,25 +15,25 @@ This driver allows you to:
 ### Functions implemented so far:
 
 [] init function (reset everything, shut off alarms etc.)  
-[] start/stop clock  
+[x] start/stop clock  
 [x] get datetime  
 [x] set datetime  
 [x] set the alarm (minutes, hours, day, weekday)  
 [] get the alarm setting (minutes, hours, day, weekday)  
-[x] enable/disable alarm components (minutes, hours, day, weekday)
-[x] clear alarm flag
-[x] enable/disable alarm interrupt
-[] start/stop clock output  
+[x] enable/disable alarm components (minutes, hours, day, weekday)  
+[x] clear alarm flag  
+[x] enable/disable alarm interrupt  
+[x] start/stop clock output  
 [x] set clock output frequency  
 [] get clock output frequency  
-[x] clear timer flag
+[x] clear timer flag  
 [x] start/stop timer  
 [x] set timer frequency  
 [] get timer frequency  
 [x] set time for timer to count down from  
-[] set the control settings  
+[x] set the control settings  
 [] get the control settings  
-[] set time only (for applications like clocks, without data)
+[] set time only (for applications like clocks, without data)  
 
 ### Blog post placeholder:
 

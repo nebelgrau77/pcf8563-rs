@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ...
 
 
-## 0.0.2 - 2021-04-03
+## [0.0.2] - 2021-04-03
 
 ### Added 
 - Single functions for enable/disable of various bit flags (alarm components, timer and alarm interrupts, clock output)
@@ -20,8 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 - All the enable_ and disable_ functions, replaced by control_ functions
 
-
-## 0.0.1 - 2021-04-03
+## [0.0.1] - 2021-04-03
 
 ### Added
 - Setting and reading datetime
@@ -32,3 +31,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Enabling/disabling clock output
 - Setting clock output frequency
 
+[0.0.2]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.2
+[0.0.1]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.1
