@@ -35,6 +35,13 @@ This driver allows you to:
 [] get the control settings  
 [x] set time only (for applications like clocks, without data)  
 
+### TO DO:
+- add various `get_` functions (alarm settings, clock output and timer frequency, interrupt status etc.)
+- add the optional `init()` function that will clear various settings at once
+- write the blog post
+- add an nRF example
+- publish on crates.io
+
 ### Blog post placeholder:
 
 [blog post](https://nebelgrau77.github.io/posts/helloworld/)
