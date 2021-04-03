@@ -7,7 +7,7 @@ based on the [`embedded-hal`] traits.
 
 [`embedded-hal`]: https://github.com/rust-embedded/embedded-hal
 
-Based on this [DS1307 driver](https://github.com/eldruin/ds1307-rs) 
+Based on this [RTC driver](https://github.com/eldruin/ds1307-rs) 
 
 This driver allows you to:
 - Read and set date and time. See: `get_datetime`
