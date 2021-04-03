@@ -33,7 +33,7 @@ This driver allows you to:
 [x] set time for timer to count down from  
 [x] set the control settings  
 [] get the control settings  
-[] set time only (for applications like clocks, without data)  
+[x] set time only (for applications like clocks, without data)  
 
 ### Blog post placeholder:
 
