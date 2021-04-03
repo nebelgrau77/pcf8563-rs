@@ -10,9 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ...
 
 
-## 0.1.0 - 2021-04-03
+## 0.0.1 - 2021-04-03
 
-This is the initial release to crates.io.
-
-[Unreleased]: 
+### Added
+- Setting and reading datetime
+- Enabling/disabling alarms and alarm interrupt
+- Setting alarms
+- Enabling/disabling timer and timer interrupt
+- Setting timer frequency
+- Enabling/disabling clock output
+- Setting clock output frequency
 
