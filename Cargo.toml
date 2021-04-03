@@ -2,19 +2,15 @@
 name = "pcf8563"
 version = "0.0.3"
 authors = ["Michal Lasak <nebelgrau77@gmail.com>"]
+edition = "2018"
+description = "Platform-agnostic Rust driver for the NXP PCF8563 real-time clock."
+documentation = ""
+readme = "README.md"
+homepage = "https://github.com/nebelgrau77/pcf8563-rs"
 repository = "https://github.com/nebelgrau77/pcf8563-rs"
 license = "MIT OR Apache-2.0"
-description = "Platform-agnostic Rust driver for the NXP PCF8563 real-time clock."
-readme = "README.md"
 keywords = ["pcf8563", "rtc", "clock", "driver", "embedded-hal-driver"]
 categories = ["embedded", "hardware-support", "no-std"]
-homepage = "https://github.com/nebelgrau77/pcf8563-rs"
-documentation = ""
-edition = "2018"
-
-# not sure what to do with that stuff below (include, badges, dev-dependencies)
-
-
 
 include = [
     "**/*.rs",
@@ -23,23 +19,16 @@ include = [
     "/README.md",
     "/LICENSE-MIT",
     "/LICENSE-APACHE",
-]
-
-
+    ]
 
 [badges]
-travis-ci = { repository = "eldruin/ds1307-rs", branch = "master" }
-coveralls = { repository = "eldruin/ds1307-rs", branch = "master", service = "github" }
 maintenance = { status = "actively-developed" }
-
-
-# should this be updated to 2.x?
 
 [dependencies]
 embedded-hal = "0.2"
 
 [dev-dependencies]
-linux-embedded-hal = "0.2"
+# linux-embedded-hal = "0.2"
 embedded-hal-mock = "0.2"
 
 [profile.release]
