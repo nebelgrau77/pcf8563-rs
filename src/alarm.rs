@@ -125,7 +125,7 @@ where
                 self.set_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)       
             }
             Control::Disable => {
-                self.clear_register_bit_flag(Register::WEEkDAY_ALARM, BitFlags::AE)
+                self.clear_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
             }
         }
     }

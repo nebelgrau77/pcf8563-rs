@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [0.0.3] - 2021-04-03
+
+### Added
+- Function for setting time only, with the date left unchanged
 
 ## [0.0.2] - 2021-04-03
 
@@ -31,5 +35,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Enabling/disabling clock output
 - Setting clock output frequency
 
+[0.0.3]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.3
 [0.0.2]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.2
 [0.0.1]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.1

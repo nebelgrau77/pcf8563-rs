@@ -29,6 +29,18 @@ pub struct DateTime {
     pub seconds: u8,
 }
 
+/// Time only (for clocks applications without calendar functions)
+#[derive(Debug,Clone,Copy,PartialEq)]
+pub struct Time {        
+    /// Hours [0-23]
+    pub hours: u8,
+    /// Minutes [0-59]
+    pub minutes: u8,
+    /// Seconds [0-59]
+    pub seconds: u8,
+}
+
+
 impl<I2C, E> PCF8563<I2C>
 where
     I2C: Write<Error = E> + WriteRead<Error = E>, 
@@ -76,4 +88,25 @@ where
         ];
     self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
+
+    /// Set time only, date remains unchanged
+    ///
+    /// Will return an 'Error::InvalidInputData' if any of the parameters is out of range
+    pub fn set_time(&mut self, datetime: &Time) -> Result<(), Error<E>> {
+        if datetime.hours > 23  ||
+           datetime.minutes > 59  ||
+           datetime.seconds > 59  {
+            return Err(Error::InvalidInputData);
+        }    
+    let payload = [
+        Register::VL_SECONDS, //first register
+        encode_bcd(datetime.seconds),
+        encode_bcd(datetime.minutes),
+        encode_bcd(datetime.hours),        
+        ];
+    self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
+    }
+
+
+
 }

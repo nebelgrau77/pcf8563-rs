@@ -81,7 +81,7 @@ mod alarm;
 mod timer;
 mod clkout;
 mod control;
-pub use datetime::DateTime;
+pub use datetime::{DateTime, Time};
 pub use timer::TimerFreq;
 pub use clkout::ClkoutFreq;
 pub use control::InterruptOutput;
