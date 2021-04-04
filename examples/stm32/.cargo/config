@@ -1,0 +1,9 @@
+[build]
+# Instruction set of Cortex-M4F
+
+target = "thumbv7em-none-eabihf"
+
+rustflags = [
+  # use the Tlink.x script from the cortex-m-rt crate
+  "-C", "link-arg=-Tlink.x",
+]

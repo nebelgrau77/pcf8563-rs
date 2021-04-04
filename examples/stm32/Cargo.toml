@@ -1,0 +1,23 @@
+[package]
+name = "rtc"
+version = "0.1.0"
+authors = ["nebelgrau <nebelgrau@gmx.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+cortex-m = "0.6.3"
+stm32l4 = {version = "0.12", features = ["rt", "stm32l4x2"]}
+stm32l4xx-hal = {version="0.6", features = ["rt", "stm32l4x2", "unproven"]}
+
+embedded-hal = {version = "0.2", features = ["unproven"]}
+
+panic-halt = "0.2"
+cortex-m-rt = "0.6.12"
+
+pcf8563 = {path = "../..", version = "*"}
+
+[profile.release]
+debug = true
+lto = true
