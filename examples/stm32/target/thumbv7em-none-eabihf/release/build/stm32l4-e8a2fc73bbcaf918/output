@@ -1,3 +1,0 @@
-cargo:rustc-link-search=/media/nebelgrau/DTSCNC1/rust/EMBEDDED/drivers/pcf8563-rs/examples/stm32/target/thumbv7em-none-eabihf/release/build/stm32l4-e8a2fc73bbcaf918/out
-cargo:rerun-if-changed=src/stm32l4x2/device.x
-cargo:rerun-if-changed=build.rs

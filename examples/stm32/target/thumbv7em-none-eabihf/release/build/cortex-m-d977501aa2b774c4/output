@@ -1,6 +1,0 @@
-cargo:rustc-link-lib=static=cortex-m
-cargo:rustc-link-search=/media/nebelgrau/DTSCNC1/rust/EMBEDDED/drivers/pcf8563-rs/examples/stm32/target/thumbv7em-none-eabihf/release/build/cortex-m-d977501aa2b774c4/out
-cargo:rustc-cfg=cortex_m
-cargo:rustc-cfg=armv7m
-cargo:rustc-cfg=armv7em
-cargo:rustc-cfg=has_fpu
