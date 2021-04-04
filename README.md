@@ -10,38 +10,26 @@ based on the [`embedded-hal`] traits.
 Based on this [RTC driver](https://github.com/eldruin/ds1307-rs) 
 
 This driver allows you to:
-- Read and set date and time. See: `get_datetime`
+- Read and set date and time. See: `get_datetime` and `set_datetime`
+- Set only the time (HH:MM:SS) for clock applications without the calendar function
+- Read and set the alarm minutes, hours, day and weekday
+- Enable the alarm components separately
+- Disable the alarm components separately or all at once
+- Set the timer and timer frequency
+- Set clock output frequency and enable/disable clock output
+- Enable and disable alarm interrupt and timer interrupt
+- Read and set various other control functions
 
-### Functions implemented so far:
 
-[x] init function (reset everything, shut off alarms etc.)  
-[x] start/stop clock  
-[x] get datetime  
-[x] set datetime  
-[x] set the alarm (minutes, hours, day, weekday)  
-[x] get the alarm setting (minutes, hours, day, weekday)  
-[x] get the alarm setting status (enabled/disabled)
-[x] enable/disable alarm components (minutes, hours, day, weekday)  
-[x] clear alarm flag  
-[x] enable/disable alarm interrupt  
-[x] start/stop clock output  
-[x] set clock output frequency  
 [] get clock output frequency  
-[x] clear timer flag  
-[x] start/stop timer  
-[x] set timer frequency  
 [] get timer frequency  
-[x] set time for timer to count down from  
-[x] set the control settings  
-[x] get the control settings  
-[x] set time only (for applications like clocks, without data)  
-[x] clear VL flag
-[x] get VL flag status
 [] get the timer interrupt mode
-[x] get current timer value
 
 ### TO DO:
-- add `get_` functions for timer frequency, timer interrupt mode and clock frequency
+- modify the alarm setting functions to keep the enabled/disabled bit flag intact
+- add `get_timer_frequency` function
+- add `get_timer_interrupt_mode` function
+- add `get_clkout_frequency` function 
 - write the blog post
 - add an nRF example
 - publish on crates.io

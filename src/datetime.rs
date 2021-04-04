@@ -120,12 +120,6 @@ where
 
     /// Set the century flag (0: century N, 1: century N+1)
     pub fn set_century_flag(&mut self, century: u8)  -> Result<(), Error<E>> {
-        
-        /*
-        if century > 1 {
-            return Err(Error::InvalidInputData);
-        }
-         */
         match century {
             0 => {
                 self.clear_register_bit_flag(Register::CENTURY_MONTHS, BitFlags::C)       
@@ -138,6 +132,5 @@ where
             }
         }
     }
-
 
 }
