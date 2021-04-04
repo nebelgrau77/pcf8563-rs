@@ -25,6 +25,17 @@ impl TimerFreq {
     }
 }
 
+/// The two possible timer interrupt output modes
+#[allow(non_camel_case_types)]
+#[derive(Copy, Clone, Debug)]
+pub enum InterruptOutput {    
+    /// Active when TF active
+    Continuous, 
+    /// Pulsating according to the datasheet
+    Pulsating,     
+}
+
+
 impl<I2C, E> PCF8563<I2C>
 where
     I2C: Write<Error = E> + WriteRead<Error = E>, 
@@ -59,17 +70,10 @@ where
             }
         }
 
-    /*
-    /// Enable timer
-    pub fn enable_timer(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)
+    /// Is timer enabled? 
+    pub fn is_timer_enabled(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::TIMER_CTRL, BitFlags::TE)
     }
-
-    /// Disable timer
-       pub fn disable_timer(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)
-    }
-    */
 
     /// Control timer interrupt
     pub fn control_timer_interrupt(&mut self, flag: Control) -> Result<(), Error<E>> {
@@ -83,27 +87,49 @@ where
         }
     }
 
-    /*
-    /// Enable timer interrupt
-     pub fn enable_timer_interrupt(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)
+    /// Is timer interrupt enabled? 
+    pub fn is_timer_interrupt_enabled(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::CTRL_STATUS_2, BitFlags::TIE)
     }
-
-    /// Disable timer interrupt
-    pub fn disable_timer_interrupt(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)
-    }
-    */
 
     /// Clear timer flag
     pub fn clear_timer_flag(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TF)
     }
 
+    /// Get the timer flag (if true, timer was triggered)
+    pub fn get_timer_flag(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::CTRL_STATUS_2, BitFlags::TF)
+    }
+
+    /// Interrupt output when TF is active (continuous or pulsating)
+    pub fn timer_interrupt_output(&mut self, output: InterruptOutput) -> Result<(), Error<E>> {
+            match output {
+            InterruptOutput::Continuous => {
+                self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TI_TP)       
+            }
+            InterruptOutput::Pulsating => {
+                self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TI_TP)
+            }
+        }
+    }
+
+    /// Read the current timer value
+    pub fn get_timer(&mut self) -> Result<u8, Error<E>> {
+        let mut data = [0];
+        self.i2c
+            .write_read(DEVICE_ADDRESS, &[Register::TIMER], &mut data)
+            .map_err(Error::I2C)?;
+        Ok(data[0])
+    }
+
+    // pub fn get_timer_interrupt_output()
+
+    // pub fn get_timer_frequency()
 
     /* USE THIS FOR GET_TIMER_FREQUENCY() ?
    
-        /// Read square-wave output rate control bits.
+    /// Read square-wave output rate control bits.
     pub fn get_square_wave_output_rate(&mut self) -> Result<SQWOUTRateBits, Error<E>> {
         let data = self.read_register(Register::SQWOUT)?;
         Ok(SQWOUTRateBits {
@@ -112,16 +138,5 @@ where
         })
     }
     */
-
-    /* USE THIS FOR IS_TIMER_ENABLED()
-    /// Read whether the square-wave output is enabled.
-    pub fn is_square_wave_output_enabled(&mut self) -> Result<bool, Error<E>> {
-        self.is_register_bit_flag_high(Register::SQWOUT, BitFlags::SQWE)
-    }
-    */
-
-
-    //pub fn is_timer_enabled()
-    // pub fn get_timer_frequency()
 
 }

@@ -54,6 +54,7 @@ impl BitFlags {
     const TE                    : u8 = 0b1000_0000; // timer enable/disable
     const FE                    : u8 = 0b1000_0000; // clockout enable/disable
     const VL                    : u8 = 0b1000_0000; // voltage low detector flag
+    const C                     : u8 = 0b1000_0000; // century flag
     }   
 
 const DEVICE_ADDRESS: u8 = 0x51;
@@ -83,9 +84,9 @@ mod timer;
 mod clkout;
 mod control;
 pub use datetime::{DateTime, Time};
-pub use timer::TimerFreq;
+pub use timer::{TimerFreq, InterruptOutput};
 pub use clkout::ClkoutFreq;
-pub use control::InterruptOutput;
+
 
 impl <I2C, E> PCF8563<I2C>
 where 
@@ -111,7 +112,7 @@ where
 
     /// Read from a register 
     fn read_register(&mut self, register: u8) -> Result<u8, Error<E>> {
-        let mut data = [0]; //need to figure out sending whole datetime
+        let mut data = [0];
         self.i2c
             .write_read(DEVICE_ADDRESS, &[register], &mut data)
             .map_err(Error::I2C)

@@ -53,22 +53,12 @@ where
         }
     }
 
-    /*
-    /// Enable clock output
-    pub fn enable_clkout(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
+    /// Is clock output enabled? 
+    pub fn is_clkout_enabled(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::CLKOUT_CTRL, BitFlags::FE)
     }
 
-    /// Disable clock output
-       pub fn disable_clkout(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
-    }
-    */
-
-    // pub fn is_clkout_active()
 
     // pub fn get_clkout_frequency()
-
-    
 
 }

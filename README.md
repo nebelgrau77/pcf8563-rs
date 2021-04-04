@@ -14,12 +14,13 @@ This driver allows you to:
 
 ### Functions implemented so far:
 
-[] init function (reset everything, shut off alarms etc.)  
+[x] init function (reset everything, shut off alarms etc.)  
 [x] start/stop clock  
 [x] get datetime  
 [x] set datetime  
 [x] set the alarm (minutes, hours, day, weekday)  
-[] get the alarm setting (minutes, hours, day, weekday)  
+[x] get the alarm setting (minutes, hours, day, weekday)  
+[x] get the alarm setting status (enabled/disabled)
 [x] enable/disable alarm components (minutes, hours, day, weekday)  
 [x] clear alarm flag  
 [x] enable/disable alarm interrupt  
@@ -32,12 +33,15 @@ This driver allows you to:
 [] get timer frequency  
 [x] set time for timer to count down from  
 [x] set the control settings  
-[] get the control settings  
+[x] get the control settings  
 [x] set time only (for applications like clocks, without data)  
+[x] clear VL flag
+[x] get VL flag status
+[] get the timer interrupt mode
+[x] get current timer value
 
 ### TO DO:
-- add various `get_` functions (alarm settings, clock output and timer frequency, interrupt status etc.)
-- add the optional `init()` function that will clear various settings at once
+- add `get_` functions for timer frequency, timer interrupt mode and clock frequency
 - write the blog post
 - add an nRF example
 - publish on crates.io

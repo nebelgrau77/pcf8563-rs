@@ -83,7 +83,7 @@ where
         encode_bcd(datetime.hours),
         encode_bcd(datetime.day),
         encode_bcd(datetime.weekday),
-        encode_bcd(datetime.month) | 0x80, //century bit set to 1
+        encode_bcd(datetime.month), //century bit set to 0
         encode_bcd(datetime.year),
         ];
     self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
@@ -107,10 +107,37 @@ where
     self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
 
+    /// Read the century flag (false: century N, true: century N+1)
+    pub fn get_century_flag(&mut self) -> Result<u8, Error<E>> {
+        let flag = self.is_register_bit_flag_high(Register::CENTURY_MONTHS, BitFlags::C)?;
+        if flag {
+            Ok(1)
+        }
+        else {
+            Ok(0)
+        }
+    }
 
-    //pub fn get_century()
-
-    //pub fn set_century()
+    /// Set the century flag (0: century N, 1: century N+1)
+    pub fn set_century_flag(&mut self, century: u8)  -> Result<(), Error<E>> {
+        
+        /*
+        if century > 1 {
+            return Err(Error::InvalidInputData);
+        }
+         */
+        match century {
+            0 => {
+                self.clear_register_bit_flag(Register::CENTURY_MONTHS, BitFlags::C)       
+            }
+            1 => {
+                self.set_register_bit_flag(Register::CENTURY_MONTHS, BitFlags::C)
+            }
+            _ => {
+                return Err(Error::InvalidInputData)
+            }
+        }
+    }
 
 
 }

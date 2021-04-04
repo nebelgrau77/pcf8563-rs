@@ -44,103 +44,81 @@ where
     }
     
     
-    /// Control alarm minutes
+    /// Control alarm minutes (reverse logic: 0 is enabled, 1 is disabled)
     pub fn control_alarm_minutes(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::On => {
+            Control::Off => {
                 self.set_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)       
             }
-            Control::Off => {
+            Control::On => {
                 self.clear_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
             }
         }
     }
     
-    /*
-
-    /// Disable alarm minutes    
-    pub fn disable_alarm_minutes(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
+    /// Is alarm minutes enabled? (reverse logic: 1 disabled, 0 enabled) 
+     pub fn is_alarm_minutes_enabled(&mut self) -> Result<bool, Error<E>> {
+        let flag = self.is_register_bit_flag_high(Register::MINUTE_ALARM, BitFlags::AE)?;
+        let flag = flag^true;
+        Ok(flag)
     }
 
-    /// Enable alarm minutes
-    pub fn enable_alarm_minutes(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
-    }
-
-    */
-
-    /// Control alarm hours
+    /// Control alarm hours (reverse logic: 0 is enabled, 1 is disabled)
     pub fn control_alarm_hours(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::On => {
+            Control::Off => {
                 self.set_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)       
             }
-            Control::Off => {
+            Control::On => {
                 self.clear_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
             }
         }
     }
 
-    /*
-    /// Disable alarm hours
-    pub fn disable_alarm_hours(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
+     /// Is alarm hours enabled? (reverse logic: 1 disabled, 0 enabled) 
+     pub fn is_alarm_hours_enabled(&mut self) -> Result<bool, Error<E>> {
+        let flag = self.is_register_bit_flag_high(Register::HOUR_ALARM, BitFlags::AE)?;
+        let flag = flag^true;
+        Ok(flag)
     }
 
-    /// Enable alarm hours
-    pub fn enable_alarm_hours(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
-    }
-    */
-
-    /// Control alarm day
+    /// Control alarm day (reverse logic: 0 is enabled, 1 is disabled)
     pub fn control_alarm_day(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::On => {
+            Control::Off => {
                 self.set_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)       
             }
-            Control::Off => {
+            Control::On => {
                 self.clear_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
             }
         }
     }
 
-    /*
-    /// Disable alarm day
-    pub fn disable_alarm_day(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
+    /// Is alarm day enabled? (reverse logic: 1 disabled, 0 enabled) 
+    pub fn is_alarm_day_enabled(&mut self) -> Result<bool, Error<E>> {
+        let flag = self.is_register_bit_flag_high(Register::DAY_ALARM, BitFlags::AE)?;
+        let flag = flag^true;
+        Ok(flag)
     }
 
-    /// Enable alarm day
-    pub fn enable_alarm_day(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
-    }
-    */
-
-     /// Control alarm weekday
-     pub fn control_alarm_weekday(&mut self, status: Control) -> Result<(), Error<E>> {
+    /// Control alarm weekday (reverse logic: 0 is enabled, 1 is disabled)
+    pub fn control_alarm_weekday(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::On => {
+            Control::Off => {
                 self.set_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)       
             }
-            Control::Off => {
+            Control::On => {
                 self.clear_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
             }
         }
     }
 
-    /*
-    /// Disable alarm weekday
-    pub fn disable_alarm_weekday(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
+    /// Is alarm weekday enabled? (reverse logic: 1 disabled, 0 enabled) 
+    pub fn is_alarm_weekday_enabled(&mut self) -> Result<bool, Error<E>> {
+        let flag = self.is_register_bit_flag_high(Register::WEEKDAY_ALARM, BitFlags::AE)?;
+        let flag = flag^true;
+        Ok(flag)
     }
-
-    /// Enable alarm weekday
-    pub fn enable_alarm_weekday(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
-    }
-    */
 
     /// Control alarm interrupt
     pub fn control_alarm_interrupt(&mut self, status: Control) -> Result<(), Error<E>> {
@@ -154,28 +132,64 @@ where
         }
     }
 
-    /*
-    /// Enable alarm interrupt
-     pub fn enable_alarm_interrupt(&mut self) -> Result<(), Error<E>> {
-        self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)
+    /// Read the alarm minutes setting, returns minutes [0-59]        
+    pub fn get_alarm_minutes(&mut self) -> Result<u8, Error<E>> {
+        let mut data = [0];
+        self.i2c
+            .write_read(DEVICE_ADDRESS, &[Register::MINUTE_ALARM], &mut data)
+            .map_err(Error::I2C)?;
+        Ok(decode_bcd(data[0]))
     }
 
-    /// Disable alarm interrupt
-    pub fn disable_alarm_interrupt(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)
+    /// Read the alarm hours setting, returns hours [0-23]        
+    pub fn get_alarm_hours(&mut self) -> Result<u8, Error<E>> {
+        let mut data = [0];
+        self.i2c
+            .write_read(DEVICE_ADDRESS, &[Register::HOUR_ALARM], &mut data)
+            .map_err(Error::I2C)?;
+        Ok(decode_bcd(data[0]))
     }
-    */
 
+    /// Read the alarm day setting, returns day [1-31]        
+    pub fn get_alarm_day(&mut self) -> Result<u8, Error<E>> {
+        let mut data = [0];
+        self.i2c
+            .write_read(DEVICE_ADDRESS, &[Register::DAY_ALARM], &mut data)
+            .map_err(Error::I2C)?;
+        Ok(decode_bcd(data[0]))
+    }
+
+    /// Read the alarm weekday setting, returns weekday [0-6]        
+    pub fn get_alarm_weekday(&mut self) -> Result<u8, Error<E>> {
+        let mut data = [0];
+        self.i2c
+            .write_read(DEVICE_ADDRESS, &[Register::WEEKDAY_ALARM], &mut data)
+            .map_err(Error::I2C)?;
+        Ok(decode_bcd(data[0]))
+    }
 
     /// Clear alarm flag
     pub fn clear_alarm_flag(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AF)
     }
 
+    /// Get the alarm flag (if true, alarm was triggered)
+    pub fn get_alarm_flag(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::CTRL_STATUS_2, BitFlags::AF)
+    }
 
-    // pub fn get_alarm_minutes()
-    // pub fn get_alarm_hours()
-    // pub fn get_alarm_day()
-    // pub fn get_alarm_weekday()
+    /// Get the alarm interrupt status
+    pub fn is_alarm_interrupt_enabled(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::CTRL_STATUS_2, BitFlags::AIE)
+    }
+
+    /// Shut off the alarms 
+    pub fn disable_all_alarms(&mut self) -> Result<(), Error<E>> {
+        self.control_alarm_minutes(Control::Off)?;
+        self.control_alarm_hours(Control::Off)?;
+        self.control_alarm_day(Control::Off)?;
+        self.control_alarm_weekday(Control::Off)?;
+        Ok(())    
+    }
 
 }
