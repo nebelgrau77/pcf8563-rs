@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
-## [0.0.3] - 2021-04-03
+## [0.0.3] - 2021-04-04
 
 ### Added
 - Function for setting time only, with the date left unchanged
+- Get and clear Voltage Low detector flag
+
+### Changed
+- Control enum fields changed to On/Off
+- control_clock() function also uses On/Off instead of Start/Stop
 
 ## [0.0.2] - 2021-04-03
 
@@ -24,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 - All the enable_ and disable_ functions, replaced by control_ functions
 
-## [0.0.1] - 2021-04-03
+## [0.0.1] - 2021-04-02
 
 ### Added
 - Setting and reading datetime

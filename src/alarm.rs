@@ -47,10 +47,10 @@ where
     /// Control alarm minutes
     pub fn control_alarm_minutes(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::MINUTE_ALARM, BitFlags::AE)
             }
         }
@@ -73,10 +73,10 @@ where
     /// Control alarm hours
     pub fn control_alarm_hours(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::HOUR_ALARM, BitFlags::AE)
             }
         }
@@ -97,10 +97,10 @@ where
     /// Control alarm day
     pub fn control_alarm_day(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::DAY_ALARM, BitFlags::AE)
             }
         }
@@ -121,10 +121,10 @@ where
      /// Control alarm weekday
      pub fn control_alarm_weekday(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::WEEKDAY_ALARM, BitFlags::AE)
             }
         }
@@ -145,10 +145,10 @@ where
     /// Control alarm interrupt
     pub fn control_alarm_interrupt(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::AIE)
             }
         }
@@ -173,5 +173,9 @@ where
     }
 
 
+    // pub fn get_alarm_minutes()
+    // pub fn get_alarm_hours()
+    // pub fn get_alarm_day()
+    // pub fn get_alarm_weekday()
 
 }

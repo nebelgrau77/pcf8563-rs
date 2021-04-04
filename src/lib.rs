@@ -53,6 +53,7 @@ impl BitFlags {
     const AE                    : u8 = 0b1000_0000; // alarm enable/disable for all four settings
     const TE                    : u8 = 0b1000_0000; // timer enable/disable
     const FE                    : u8 = 0b1000_0000; // clockout enable/disable
+    const VL                    : u8 = 0b1000_0000; // voltage low detector flag
     }   
 
 const DEVICE_ADDRESS: u8 = 0x51;
@@ -64,9 +65,9 @@ const DEVICE_ADDRESS: u8 = 0x51;
 /// Two possible choices, used for various enable/disable bit flags
 pub enum Control {    
     /// Enable some feature, eg. timer 
-    Enable, 
+    On, 
     /// Disable some feature, eg. timer
-    Disable,     
+    Off,     
 }
 
 /// PCF8563 driver

@@ -44,10 +44,10 @@ where
     /// Enable or disable clock output
     pub fn control_clkout(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
             }
         }
@@ -64,5 +64,11 @@ where
         self.clear_register_bit_flag(Register::CLKOUT_CTRL, BitFlags::FE)
     }
     */
+
+    // pub fn is_clkout_active()
+
+    // pub fn get_clkout_frequency()
+
+    
 
 }

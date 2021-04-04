@@ -50,10 +50,10 @@ where
     /// Control timer interrupt
     pub fn control_timer(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)       
                 }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::TIMER_CTRL, BitFlags::TE)
                 }
             }
@@ -74,10 +74,10 @@ where
     /// Control timer interrupt
     pub fn control_timer_interrupt(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)       
             }
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TIE)
             }
         }
@@ -99,5 +99,29 @@ where
     pub fn clear_timer_flag(&mut self) -> Result<(), Error<E>> {
         self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TF)
     }
+
+
+    /* USE THIS FOR GET_TIMER_FREQUENCY() ?
+   
+        /// Read square-wave output rate control bits.
+    pub fn get_square_wave_output_rate(&mut self) -> Result<SQWOUTRateBits, Error<E>> {
+        let data = self.read_register(Register::SQWOUT)?;
+        Ok(SQWOUTRateBits {
+            rs0: (data & BitFlags::OUTRATERS0) != 0,
+            rs1: (data & BitFlags::OUTRATERS1) != 0,
+        })
+    }
+    */
+
+    /* USE THIS FOR IS_TIMER_ENABLED()
+    /// Read whether the square-wave output is enabled.
+    pub fn is_square_wave_output_enabled(&mut self) -> Result<bool, Error<E>> {
+        self.is_register_bit_flag_high(Register::SQWOUT, BitFlags::SQWE)
+    }
+    */
+
+
+    //pub fn is_timer_enabled()
+    // pub fn get_timer_frequency()
 
 }

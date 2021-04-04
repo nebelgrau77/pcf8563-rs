@@ -14,13 +14,6 @@ pub enum InterruptOutput {
     Pulsating,     
 }
 
-pub enum ClockControl {    
-    /// Start the internal clock
-    Start, 
-    /// Start the internal clock
-    Stop,     
-}
-
 
 impl<I2C, E> PCF8563<I2C>
 where
@@ -31,11 +24,11 @@ where
     pub fn control_ext_clk_test_mode(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
             /// Enable external clock test mode
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::CTRL_STATUS_1, BitFlags::TEST1)       
             }
             /// Disable external clock test mode (normal operation)
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::CTRL_STATUS_1, BitFlags::TEST1)
             }
         }
@@ -54,12 +47,12 @@ where
     */
 
     /// Start/stop the clock 
-    pub fn control_clock(&mut self, flag: ClockControl) -> Result<(), Error<E>> {
+    pub fn control_clock(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
-            ClockControl::Start => {
+            Control::On => {
                 self.clear_register_bit_flag(Register::CTRL_STATUS_1, BitFlags::STOP)       
             }
-            ClockControl::Stop => {
+            Control::Off => {
                 self.set_register_bit_flag(Register::CTRL_STATUS_1, BitFlags::STOP)
             }
         }
@@ -81,11 +74,11 @@ where
      pub fn control_power_on_reset_override(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
             /// Enable power-on-reset override
-            Control::Enable => {
+            Control::On => {
                 self.set_register_bit_flag(Register::CTRL_STATUS_1, BitFlags::TESTC)       
             }
             /// Disable power-on-reset override (normal operation)
-            Control::Disable => {
+            Control::Off => {
                 self.clear_register_bit_flag(Register::CTRL_STATUS_1, BitFlags::TESTC)
             }
         }
@@ -116,6 +109,17 @@ where
        }
    }
 
+   /// Check the status of the Voltage Low detector flag
+   pub fn get_voltage_low_flag(&mut self) -> Result<bool, Error<E>> {
+       self.is_register_bit_flag_high(Register::VL_SECONDS, BitFlags::VL)
+   }
+   
+   /// Clear voltage low detector flag
+   pub fn clear_voltage_low_flag(&mut self) -> Result<(), Error<E>> {
+       self.clear_register_bit_flag(Register::VL_SECONDS, BitFlags::VL)
+   }
+
+   // pub fn rtc_init()
 
 }
 
