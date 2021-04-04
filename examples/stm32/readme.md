@@ -1,3 +1,3 @@
-### STM32L432 - blinkenlight in rust
+### Example of PCF8563 usage with STM32L432KC Nucleo32 board
 
-First test of the Nucleo-32 ST32L432KC in Rust, a simple blinking LED.
+Sets the time, then reads it and prints over serial every second.
