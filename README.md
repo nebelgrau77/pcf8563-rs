@@ -20,11 +20,6 @@ This driver allows you to:
 - Enable and disable alarm interrupt and timer interrupt
 - Read and set various other control functions
 
-
-[] get clock output frequency  
-[] get timer frequency  
-[] get the timer interrupt mode
-
 ### TO DO:
 - modify the alarm setting functions to keep the enabled/disabled bit flag intact
 - add `get_timer_frequency` function
