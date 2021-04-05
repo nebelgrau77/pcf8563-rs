@@ -9,9 +9,9 @@ use hal::blocking::i2c::{Write, WriteRead};
 #[repr(u8)]
 pub enum ClkoutFreq {    
     /// Set frequency to 32768 Hz.
-    Clkout_32kHz        = 0b0000_0000, 
+    Clkout_32768Hz        = 0b0000_0000, 
     /// Set frequency to 1024 Hz.
-    Clkout_1kHz         = 0b0000_0001, 
+    Clkout_1024Hz         = 0b0000_0001, 
     /// Set frequency to 32 Hz.    
     Clkout_32Hz         = 0b0000_0010, 
     /// Set frequency to 1 Hz. 

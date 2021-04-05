@@ -48,6 +48,8 @@
 //! rtc.set_datetime(&now).unwrap();
 //! ```
 //! 
+//! __TO DO__: add description of the century flag
+//! 
 //! # Alarm
 //!
 //! All the alarm-related functions are defined in the `alarm.rs` module:
@@ -85,19 +87,61 @@
 //! 
 //! All the timer-related functions are defined in the `timer.rs` module
 //!
-//! (to be completed)
+//! The timer can be set with a value up to 255, and one of the four clock frequencies can be chosen:
+//! - 4096 Hz
+//! - 64 Hz
+//! - 1 Hz (every second)
+//! - 1/60 Hz (every minute)
+//! 
+//! When the countdown ends, TF bit flag is set. The timer can also set the interrupt pin 
+//! to active, and the output mode can be chosen between continuous and pulsating (please consult the datasheet for more information).
+//! 
+//! __NOTE__: if both AIE (alarm interrupt) and TIE (timer interrupt) settings are enabled, the status of the interrupt pin will be 
+//! the result of an OR operation, i.e. will be active when either alarm or timer will trigger the interrupt event.
+//! 
+//! ```rust
+//! rtc.set_timer_frequency(TimerFreq::Timer_1Hz).unwrap(); // set frequency to 1 Hz
+//! rtc.set_timer(30).unwrap(); // set timer to 30 ticks 
+//! rtc.control_timer_interrupt(Control::On).unwrap(); // enable timer interrupt
+//! rtc.control_timer(Control::On).unwrap(); // start the timer
+//! 
+//! // after 30 seconds the timer will set the TF flag and the interrupt pin will become active
+//! 
+//! rtc.control_timer(Control::Off).unwrap(); // disable the timer
+//! rtc.clear_timer_flag().unwrap(); // clear the timer flag
+//! ```
 //! 
 //! # Clock output
 //! 
 //! All the clock output-related functions are defined in the `clkout.rs` module
 //! 
-//! (to be completed)
+//! The clock output is a square wave with 50% duty cycle on the dedicated open drain pin (a 10k 
+//! pull-up resistor between the pin and 3V3 is necessary). It can be used as input to a charge pump, 
+//! as an external clock for a microcontroller, etc.
+//! 
+//! The clock output can be enabled or disabled, and the frequency can be set to:
+//! - 32768Hz (default setting)
+//! - 1024 Hz
+//! - 32 Hz
+//! - 1 Hz
+//! 
+//! On reset the clock output is enabled and set to 32768 Hz
+//! 
+//! ```rust
+//! rtc.set_clkout_frequency(ClkoutFreq::Clkout_1024Hz).unwrap(); // set the frequency
+//! rtc.control_clkout(Control::On).unwrap(); // enable the clock output
+//! ``` 
 //! 
 //! # RTC Control
 //! 
 //! All the other control functions are defined in the `control.rs` module
 //! 
-//! (to be completed)
+//! - `control_clock()` - starts and stops the internal clock of the RTC
+//! - `is_clock_running()` - checks the STOP flag (if cleared, the clock is running)
+//! - `get_voltage_low_flag()` - checks whether the VL flag was triggered (see datasheet for details)
+//! - `clear_voltage_low_flag()` - clears the voltage low detection flag
+//! - `control_ext_clk_test_mode()` - enables the EXT_CLK test mode (see datasheet for details)
+//! - `control_power_on_reset_override()` - enables the POR override mode (see datasheet for details)
 //! 
 
 

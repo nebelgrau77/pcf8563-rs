@@ -29,7 +29,7 @@ impl TimerFreq {
 #[allow(non_camel_case_types)]
 #[derive(Copy, Clone, Debug)]
 pub enum InterruptOutput {    
-    /// Active when TF active.
+    /// Active when TF active (default setting).
     Continuous, 
     /// Pulsating according to the datasheet.
     Pulsating,     
