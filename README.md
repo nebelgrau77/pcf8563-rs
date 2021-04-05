@@ -21,17 +21,13 @@ This driver allows you to:
 - Read and set various other control functions
 
 ### TO DO:
-- [ ] modify the alarm setting functions to keep the enabled/disabled bit flag intact
 - [ ] add `get_timer_frequency` function
 - [ ] add `get_timer_interrupt_mode` function
 - [ ] add `get_clkout_frequency` function 
-- [ ] write the blog post
 - [ ] add an nRF example
 - [ ] publish on crates.io
 
-### Blog post placeholder:
-
-[blog post](https://nebelgrau77.github.io/posts/helloworld/)
+[How this driver was ~~won~~ written](https://nebelgrau77.github.io/posts/rust_driver/)
 
 ## The device
 

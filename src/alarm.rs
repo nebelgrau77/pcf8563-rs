@@ -11,38 +11,54 @@ where
     I2C: Write<Error = E> + WriteRead<Error = E>, 
 {
 
-    /// Set the alarm minutes [0-59]
+    /// Set the alarm minutes [0-59], keeping the AE bit unchanged
     pub fn set_alarm_minutes(&mut self, minutes: u8) -> Result<(), Error<E>> {
         if minutes > 59 {
             return Err(Error::InvalidInputData);
         }
-        self.write_register(Register::MINUTE_ALARM, encode_bcd(minutes))
+        let data: u8 = self.read_register(Register::MINUTE_ALARM)?; // read current value
+        let data: u8 = data & BitFlags::AE; // keep the AE bit as is
+        let setting: u8 = encode_bcd(minutes);
+        let data: u8 = data | setting;
+        self.write_register(Register::MINUTE_ALARM, data)
     }
 
-    /// Set the alarm hours [0-23]
+    /// Set the alarm hours [0-23], keeping the AE bit unchanged
     pub fn set_alarm_hours(&mut self, hours: u8) -> Result<(), Error<E>> {
         if hours > 23 {
             return Err(Error::InvalidInputData);
         }
-        self.write_register(Register::HOUR_ALARM, encode_bcd(hours))
+        let data: u8 = self.read_register(Register::HOUR_ALARM)?; // read current value
+        let data: u8 = data & BitFlags::AE; // keep the AE bit as is
+        let setting: u8 = encode_bcd(hours);
+        let data: u8 = data | setting;
+        self.write_register(Register::HOUR_ALARM, data)
     }
 
-    /// Set the alarm day [1-31]
+    /// Set the alarm day [1-31], keeping the AE bit unchanged
     pub fn set_alarm_day(&mut self, day: u8) -> Result<(), Error<E>> {
         if day < 1 || day > 31 {
             return Err(Error::InvalidInputData);
         }
-        self.write_register(Register::DAY_ALARM, encode_bcd(day))
+        let data: u8 = self.read_register(Register::DAY_ALARM)?; // read current value
+        let data: u8 = data & BitFlags::AE; // keep the AE bit as is
+        let setting: u8 = encode_bcd(day);
+        let data: u8 = data | setting;
+        self.write_register(Register::DAY_ALARM, data)
     }
 
-    /// Set the alarm weekday [0-6]
+    /// Set the alarm weekday [0-6], keeping the AE bit unchanged
     pub fn set_alarm_weekday(&mut self, weekday: u8) -> Result<(), Error<E>> {
         if weekday > 6 {
             return Err(Error::InvalidInputData);
         }
-        self.write_register(Register::WEEKDAY_ALARM, encode_bcd(weekday))
+        let data: u8 = self.read_register(Register::WEEKDAY_ALARM)?; // read current value
+        let data: u8 = data & BitFlags::AE; // keep the AE bit as is
+        let setting: u8 = encode_bcd(weekday);
+        let data: u8 = data | setting;
+        self.write_register(Register::WEEKDAY_ALARM, data)
     }
-    
+
     
     /// Control alarm minutes (reverse logic: 0 is enabled, 1 is disabled)
     pub fn control_alarm_minutes(&mut self, status: Control) -> Result<(), Error<E>> {

@@ -1,6 +1,6 @@
 [package]
 name = "pcf8563"
-version = "0.0.4"
+version = "0.1.0"
 authors = ["Michal Lasak <nebelgrau77@gmail.com>"]
 edition = "2018"
 description = "Platform-agnostic Rust driver for the NXP PCF8563 real-time clock."
@@ -28,7 +28,6 @@ maintenance = { status = "actively-developed" }
 embedded-hal = "0.2"
 
 [dev-dependencies]
-# linux-embedded-hal = "0.2"
 embedded-hal-mock = "0.2"
 
 [profile.release]
