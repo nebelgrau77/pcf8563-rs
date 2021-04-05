@@ -66,6 +66,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Enabling/disabling clock output
 - Setting clock output frequency
 
+[0.1.0]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.1.0
 [0.0.4]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.4
 [0.0.3]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.3
 [0.0.2]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.2
