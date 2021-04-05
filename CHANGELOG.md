@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [0.1.0] - 2021-04-05
+
+### Changed
+- All the alarm setting functions keep the current setting of the AE bit, enabled or disabled
+- GitHub repository visibility changed to "public"
+
 ## [0.0.4] - 2021-04-04
 
 ### Added
