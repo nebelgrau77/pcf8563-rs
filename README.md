@@ -97,11 +97,11 @@ fn main() -> ! {
     // prepare date and time to be set
     let now = DateTime {
         year: 21, // 2021
-        month: 3,        
-        weekday: 4, // Wednesday, Sunday is 0
-        day: 31,
-        hours: 21,
-        minutes: 58,
+        month: 4, // April
+        weekday: 0, // Sunday
+        day: 4, 
+        hours: 16,
+        minutes: 52,
         seconds: 00,
     };
 
