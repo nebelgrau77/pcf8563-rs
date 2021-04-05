@@ -1,5 +1,106 @@
-//! This is a platform agonostic Rust driver for the NXP PCF8563 real-time clock,
+//! This is a platform agnostic Rust driver for the NXP PCF8563 real-time clock,
 //! based on the [`embedded-hal`](https://github.com/japaric/embedded-hal) traits.
+//!
+//! # Initialization
+//! 
+//! A new instance of the device is created like this:
+//! 
+//! ```rust
+//! use pcf8563::*;
+//! 
+//! let mut rtc = PCF::new(i2c);
+//! ```
+//! 
+//! The RTC doesn't need any special setup, you can just start reading from/ writing to it.
+//! The wrapper function `rtc_init()` can be used for initialization of the device:
+//! 
+//! ```rust
+//! rtc.rtc_init().unwrap();
+//! ```
+//! 
+//! It clears all the bits in the two control registers, disabling all the interrupts, 
+//! alarms, timer and special modes (power-on-reset override, external clock).
+//! It also sets the timer to the lowest possible frequency (1/60 Hz) for power saving.
+//! 
+//! 
+//! # Date and time
+//!
+//! All the functions regarding setting and reading date and time are defined in the `datetime.rs` module:
+//!
+//! - `set_datetime` (sets all the date and time components at once)
+//! - `get_datetime` (reads all the date and time components at once)
+//! - `set_time` (sets only time components, all at once)
+//!  
+//! ```rust
+//! 
+//! let mut rtc = PCF8563::new(i2c);
+//! 
+//! let now = DateTime {
+//!     year: 21, 
+//!     month: 4,
+//!     weekday: 0, // Sunday
+//!     day: 4, 
+//!     hours: 7,
+//!     minutes: 15,
+//!     seconds: 00,
+//! };
+//! 
+//! rtc.set_datetime(&now).unwrap();
+//! ```
+//! 
+//! # Alarm
+//!
+//! All the alarm-related functions are defined in the `alarm.rs` module:
+//! 
+//! - setting and reading single alarm components (minutes, hours, days, weekdays)
+//! - enabling and disabling single alarm components
+//! - enabling and disabling alarm interrupt (interrupt pin set to active when the alarm event occurs)
+//!
+//! ```rust
+//! // set the alarm to 9:25, the alarm flag AF will be set at that time, 
+//! // and the interrupt pin set to active
+//! rtc.set_alarm_minutes(25).unwrap();
+//! rtc.set_alarm_hours(9).unwrap();
+//! rtc.control_alarm_minutes(Control::On).unwrap();
+//! rtc.control_alarm_hours(Control::On).unwrap();
+//! rtc.control_alarm_interrupt(Control::On).unwrap();
+//!```
+//! 
+//! To check the alarm flag and clear after it's set:
+//! 
+//! ```rust
+//! if rtc.get_alarm_flag().unwrap() {
+//!     rtc.clear_alarm_flag().unwrap()
+//! }
+//!```
+//!
+//! Each alarm component has to be enabled separately: minutes, hours, day, weekday,
+//! but a wrapper function was defined to disable all the alarms at once:
+//!
+//! ```rust
+//! rtc.disable_all_alarms().unwrap();
+//! ```
+//!
+//! # Timer
+//! 
+//! All the timer-related functions are defined in the `timer.rs` module
+//!
+//! (to be completed)
+//! 
+//! # Clock output
+//! 
+//! All the clock output-related functions are defined in the `clkout.rs` module
+//! 
+//! (to be completed)
+//! 
+//! # RTC Control
+//! 
+//! All the other control functions are defined in the `control.rs` module
+//! 
+//! (to be completed)
+//! 
+
+
 
 #![deny(unsafe_code)]
 #![deny(missing_docs)]
@@ -107,8 +208,6 @@ where
         let payload: [u8; 2] = [register, data]; //need to figure out sending whole datetime
         self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
-
-    // do I need WriteRead, or maybe just Read here?
 
     /// Read from a register 
     fn read_register(&mut self, register: u8) -> Result<u8, Error<E>> {

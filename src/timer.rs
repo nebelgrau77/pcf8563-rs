@@ -3,18 +3,18 @@
 use super::{PCF8563, DEVICE_ADDRESS, hal, Error, Register, BitFlags, Control, encode_bcd, decode_bcd};
 use hal::blocking::i2c::{Write, WriteRead};
 
-/// The four possible timer frequency settings
+/// Four possible timer frequency settings.
 #[allow(non_camel_case_types)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[repr(u8)]
 pub enum TimerFreq {    
-    /// 4096 Hz
+    /// Set timer frequency to 4096 Hz.
     Timer_4096Hz    = 0b0000_0000, 
-    /// 64 Hz
+    /// Set timer frequency to 64 Hz.
     Timer_64Hz      = 0b0000_0001, 
-    /// 1 Hz    
+    /// Set timer frequency to 1 Hz.    
     Timer_1Hz       = 0b0000_0010, 
-    /// 1/60 Hz - should be used when timer is off to limit energy usage
+    /// Set timer frequency to 1/60 Hz. This should be used when timer is off to limit energy consumption.
     Timer_1_60Hz    = 0b0000_0011, 
 }
 
@@ -25,13 +25,13 @@ impl TimerFreq {
     }
 }
 
-/// The two possible timer interrupt output modes
+/// Two possible timer interrupt output modes
 #[allow(non_camel_case_types)]
 #[derive(Copy, Clone, Debug)]
 pub enum InterruptOutput {    
-    /// Active when TF active
+    /// Active when TF active.
     Continuous, 
-    /// Pulsating according to the datasheet
+    /// Pulsating according to the datasheet.
     Pulsating,     
 }
 
@@ -46,8 +46,7 @@ where
         self.write_register(Register::TIMER, time)
     }
 
-    /// Set timer frequency
-    /// (Does not alter the timer enabled/disabled bit)
+    /// Set timer frequency (does not alter the timer enabled/disabled bit).
     pub fn set_timer_frequency(
         &mut self,
         frequency: TimerFreq,
@@ -58,7 +57,7 @@ where
         self.write_register(Register::TIMER_CTRL, data)
     }
 
-    /// Control timer interrupt
+    /// Enable or disable the timer interrupt.
     pub fn control_timer(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
             Control::On => {
@@ -70,12 +69,12 @@ where
             }
         }
 
-    /// Is timer enabled? 
+    /// Check if timer is enabled.
     pub fn is_timer_enabled(&mut self) -> Result<bool, Error<E>> {
         self.is_register_bit_flag_high(Register::TIMER_CTRL, BitFlags::TE)
     }
 
-    /// Control timer interrupt
+    /// Enable or disable timer interrupt.
     pub fn control_timer_interrupt(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
             Control::On => {
@@ -87,22 +86,22 @@ where
         }
     }
 
-    /// Is timer interrupt enabled? 
+    /// Check if timer interrupt is enabled.
     pub fn is_timer_interrupt_enabled(&mut self) -> Result<bool, Error<E>> {
         self.is_register_bit_flag_high(Register::CTRL_STATUS_2, BitFlags::TIE)
     }
 
-    /// Clear timer flag
-    pub fn clear_timer_flag(&mut self) -> Result<(), Error<E>> {
-        self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TF)
-    }
-
-    /// Get the timer flag (if true, timer was triggered)
+    /// Get the timer flag status (if true, timer was triggered).
     pub fn get_timer_flag(&mut self) -> Result<bool, Error<E>> {
         self.is_register_bit_flag_high(Register::CTRL_STATUS_2, BitFlags::TF)
     }
 
-    /// Interrupt output when TF is active (continuous or pulsating)
+    /// Clear the timer flag.
+    pub fn clear_timer_flag(&mut self) -> Result<(), Error<E>> {
+        self.clear_register_bit_flag(Register::CTRL_STATUS_2, BitFlags::TF)
+    }
+
+    /// Select the interrupt output mode when TF flag is set (continuous or pulsating).
     pub fn timer_interrupt_output(&mut self, output: InterruptOutput) -> Result<(), Error<E>> {
             match output {
             InterruptOutput::Continuous => {
@@ -114,7 +113,7 @@ where
         }
     }
 
-    /// Read the current timer value
+    /// Read the current timer value.
     pub fn get_timer(&mut self) -> Result<u8, Error<E>> {
         let mut data = [0];
         self.i2c
@@ -129,7 +128,6 @@ where
 
     /* USE THIS FOR GET_TIMER_FREQUENCY() ?
    
-    /// Read square-wave output rate control bits.
     pub fn get_square_wave_output_rate(&mut self) -> Result<SQWOUTRateBits, Error<E>> {
         let data = self.read_register(Register::SQWOUT)?;
         Ok(SQWOUTRateBits {

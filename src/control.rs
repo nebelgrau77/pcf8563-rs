@@ -9,7 +9,7 @@ where
     I2C: Write<Error = E> + WriteRead<Error = E>,
 {
     
-    /// Enable or disable external clock test mode
+    /// Enable or disable external clock test mode.
     pub fn control_ext_clk_test_mode(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {            
             Control::On => {
@@ -21,12 +21,12 @@ where
         }
     }
 
-    /// Is external clock test mode enabled?
+    /// Is the external clock test mode enabled?
     pub fn is_ext_clk_mode_enabled(&mut self) -> Result<bool, Error<E>> {
         self.is_register_bit_flag_high(Register::CTRL_STATUS_1, BitFlags::TEST1)
     }
 
-    /// Start/stop the internal clock
+    /// Start/stop the internal clock.
     pub fn control_clock(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {
             Control::On => {
@@ -38,14 +38,14 @@ where
         }
     }
 
-    /// Is the internal clock running? (0 - running, 1 - stopped)
+    /// Check if the internal clock is running.
     pub fn is_clock_running(&mut self) -> Result<bool, Error<E>> {
         let flag = self.is_register_bit_flag_high(Register::CTRL_STATUS_1, BitFlags::STOP)?;
         let flag = flag^true;
         Ok(flag)
     }
 
-    /// Enable or disable power-on-reset override facility
+    /// Enable or disable power-on-reset override facility.
      pub fn control_power_on_reset_override(&mut self, flag: Control) -> Result<(), Error<E>> {
         match flag {            
             Control::On => {
@@ -57,7 +57,7 @@ where
         }
     }
 
-    /// Is power-on-reset override facility enabled?
+    /// Check if power-on-reset override facility is enabled.
     pub fn is_power_on_reset_override_enabled(&mut self) -> Result<bool, Error<E>> {
         self.is_register_bit_flag_high(Register::CTRL_STATUS_1, BitFlags::TESTC)
     }
@@ -67,14 +67,12 @@ where
        self.is_register_bit_flag_high(Register::VL_SECONDS, BitFlags::VL)
     }
    
-    /// Clear voltage low detector flag
+    /// Clear the voltage low detector flag.
     pub fn clear_voltage_low_flag(&mut self) -> Result<(), Error<E>> {
        self.clear_register_bit_flag(Register::VL_SECONDS, BitFlags::VL)
     }
 
-    /// Initialize the RTC by setting all the control flags to zero,
-    /// Disabling alarms and timer
-    /// Timer clock set to the lowest frequency for power saving
+    /// Initialize the RTC by setting all the control flags to zero, disabling alarms and timer, and setting the timer to the lowest frequency for power saving.
     pub fn rtc_init(&mut self) -> Result<(), Error<E>> {
         self.write_register(Register::CTRL_STATUS_1, 0)?; // clear all the control bits 
         self.write_register(Register::CTRL_STATUS_2, 0)?;

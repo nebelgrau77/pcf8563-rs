@@ -8,18 +8,18 @@ use hal::blocking::i2c::{Write, WriteRead};
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[repr(u8)]
 pub enum ClkoutFreq {    
-    /// 32768 Hz
+    /// Set frequency to 32768 Hz.
     Clkout_32kHz        = 0b0000_0000, 
-    /// 1024 Hz
+    /// Set frequency to 1024 Hz.
     Clkout_1kHz         = 0b0000_0001, 
-    /// 32 Hz    
+    /// Set frequency to 32 Hz.    
     Clkout_32Hz         = 0b0000_0010, 
-    /// 1 Hz 
+    /// Set frequency to 1 Hz. 
     Clkout_1Hz          = 0b0000_0011, 
 }
 
 impl ClkoutFreq {
-    /// Converts the ClkoutFreq to an unsigned 8-bit value
+    /// Converts the ClkoutFreq to an unsigned 8-bit value.
     pub fn bits(self) -> u8 {
         self as u8
     }
@@ -29,8 +29,7 @@ impl<I2C, E> PCF8563<I2C>
 where
     I2C: Write<Error = E> + WriteRead<Error = E>, 
 {
-    /// Set clock output frequency
-    /// (Does not alter the clkout enabled/disabled bit)
+    /// Set clock output frequency (does not alter the clkout enabled/disabled bit).
     pub fn set_clkout_frequency(
         &mut self,
         frequency: ClkoutFreq,
@@ -41,7 +40,7 @@ where
         self.write_register(Register::CLKOUT_CTRL, data)
     }
     
-    /// Enable or disable clock output
+    /// Enable or disable clock output.
     pub fn control_clkout(&mut self, status: Control) -> Result<(), Error<E>> {
         match status {
             Control::On => {
@@ -53,7 +52,7 @@ where
         }
     }
 
-    /// Is clock output enabled? 
+    /// Is the clock output enabled? 
     pub fn is_clkout_enabled(&mut self) -> Result<bool, Error<E>> {
         self.is_register_bit_flag_high(Register::CLKOUT_CTRL, BitFlags::FE)
     }

@@ -7,29 +7,28 @@
 //! a convenient set_time() function could be added (sets only seconds, minutes and hours)
 
 use super::{BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563, hal, encode_bcd, decode_bcd};
-//use embedded_hal as hal;
 use hal::blocking::i2c::{Write, WriteRead};
 
-/// Date and time
+/// Container to hold date and time components.
 #[derive(Debug,Clone,Copy,PartialEq)]
 pub struct DateTime {    
-    /// Year [0-99]
+    /// Year [0-99].
     pub year: u8,    
     /// Month [1-12]
     pub month: u8,    
-    /// Weekday [0-6]
+    /// Weekday [0-6].
     pub weekday: u8,    
-    /// Days [1-31]
+    /// Days [1-31].
     pub day: u8,    
-    /// Hours [0-23]
+    /// Hours [0-23].
     pub hours: u8,
-    /// Minutes [0-59]
+    /// Minutes [0-59].
     pub minutes: u8,
-    /// Seconds [0-59]
+    /// Seconds [0-59].
     pub seconds: u8,
 }
 
-/// Time only (for clocks applications without calendar functions)
+/// Container to hold time components only (for clock applications without calendar functions).
 #[derive(Debug,Clone,Copy,PartialEq)]
 pub struct Time {        
     /// Hours [0-23]
@@ -63,9 +62,9 @@ where
         })
     }
 
-    /// Set the date and time 
+    /// Set date and time all at once.
     ///
-    /// Will return an 'Error::InvalidInputData' if any of the parameters is out of range
+    /// Will return an 'Error::InvalidInputData' if any of the parameters is out of range.
     pub fn set_datetime(&mut self, datetime: &DateTime) -> Result<(), Error<E>> {
         if datetime.year > 99 ||
            datetime.month < 1 || datetime.month > 12  ||
@@ -89,9 +88,9 @@ where
     self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
 
-    /// Set time only, date remains unchanged
+    /// Set only the time, date remains unchanged.
     ///
-    /// Will return an 'Error::InvalidInputData' if any of the parameters is out of range
+    /// Will return an 'Error::InvalidInputData' if any of the parameters is out of range.
     pub fn set_time(&mut self, datetime: &Time) -> Result<(), Error<E>> {
         if datetime.hours > 23  ||
            datetime.minutes > 59  ||
@@ -107,7 +106,7 @@ where
     self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
 
-    /// Read the century flag (false: century N, true: century N+1)
+    /// Read the century flag (0: century N, 1: century N+1).
     pub fn get_century_flag(&mut self) -> Result<u8, Error<E>> {
         let flag = self.is_register_bit_flag_high(Register::CENTURY_MONTHS, BitFlags::C)?;
         if flag {
@@ -118,7 +117,7 @@ where
         }
     }
 
-    /// Set the century flag (0: century N, 1: century N+1)
+    /// Set the century flag (0: century N, 1: century N+1).
     pub fn set_century_flag(&mut self, century: u8)  -> Result<(), Error<E>> {
         match century {
             0 => {
