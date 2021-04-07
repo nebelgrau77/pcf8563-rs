@@ -68,16 +68,17 @@ fn main() -> ! {
 
     rtc.rtc_init().unwrap();
 
+    
     let now = DateTime {
         year: 21, // 2021
         month: 4, // April
-        weekday: 0, // Sunday
-        day: 4, 
-        hours: 16,
-        minutes: 52,
+        weekday: 2, // Tuesday
+        day: 6, 
+        hours: 22,
+        minutes: 22,
         seconds: 00,
     };
-
+    
     // set date and time in one go
     rtc.set_datetime(&now).unwrap();
 
@@ -85,6 +86,7 @@ fn main() -> ! {
         led.set_high().ok();        
         delay.delay_ms(500 as u32);
 
+        
         let now = rtc.get_datetime().unwrap();
  
         // format the date and time in a long format
@@ -99,6 +101,7 @@ fn main() -> ! {
                 now.seconds,
                 ).unwrap();
         
+                 
         led.set_low().ok();
         delay.delay_ms(500 as u32);
         

@@ -1,3 +1,5 @@
+//! # PCF8563
+//! 
 //! This is a platform agnostic Rust driver for the NXP PCF8563 real-time clock,
 //! based on the [`embedded-hal`](https://github.com/japaric/embedded-hal) traits.
 //!
@@ -133,7 +135,6 @@
 //! ``` 
 //! 
 //! # RTC Control
-//! 
 //! All the other control functions are defined in the `control.rs` module
 //! 
 //! - `control_clock()` - starts and stops the internal clock of the RTC
@@ -142,9 +143,6 @@
 //! - `clear_voltage_low_flag()` - clears the voltage low detection flag
 //! - `control_ext_clk_test_mode()` - enables the EXT_CLK test mode (see datasheet for details)
 //! - `control_power_on_reset_override()` - enables the POR override mode (see datasheet for details)
-//! 
-
-
 
 #![deny(unsafe_code)]
 #![deny(missing_docs)]
@@ -204,11 +202,10 @@ impl BitFlags {
 
 const DEVICE_ADDRESS: u8 = 0x51;
 
-/// Control states
+/// Two possible choices, used for various enable/disable bit flags
 #[allow(non_camel_case_types)]
 #[derive(Copy, Clone, Debug)]
 
-/// Two possible choices, used for various enable/disable bit flags
 pub enum Control {    
     /// Enable some feature, eg. timer 
     On, 
@@ -237,7 +234,7 @@ impl <I2C, E> PCF8563<I2C>
 where 
     I2C: Write<Error = E> + WriteRead<Error = E>,
 {
-    /// Create a new instance.
+    /// Create a new instance of the PCF8563 driver.
     pub fn new(i2c: I2C) -> Self {
         PCF8563 { i2c }
     }
@@ -247,13 +244,13 @@ where
         self.i2c
     }
 
-    /// Write to a register. Buffer is big enough to contain the whole datetime.
+    /// Write to a register.
     fn write_register(&mut self, register: u8, data: u8) -> Result<(), Error<E>> {
         let payload: [u8; 2] = [register, data]; //need to figure out sending whole datetime
         self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
 
-    /// Read from a register 
+    /// Read from a register. 
     fn read_register(&mut self, register: u8) -> Result<u8, Error<E>> {
         let mut data = [0];
         self.i2c
@@ -262,13 +259,13 @@ where
             .and(Ok(data[0]))
     }
 
-    /// Check if specific bits are set
+    /// Check if specific bits are set.
     fn is_register_bit_flag_high(&mut self, address: u8, bitmask: u8) -> Result<bool, Error<E>> {
         let data = self.read_register(address)?;
         Ok((data & bitmask) != 0)
     }
 
-    /// Set specific bits
+    /// Set specific bits.
     fn set_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
         if (data & bitmask) == 0 { // does it mean that they are different if 0?
@@ -278,7 +275,7 @@ where
         }
     }
 
-    /// Clear specific bits
+    /// Clear specific bits.
     fn clear_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
         if (data & bitmask) != 0 { // what does this mean?
@@ -289,14 +286,14 @@ where
     }
 }
 
-/// convert the Binary Coded Decimal value to decimal (only the lowest 7 bits)
+/// Convert the Binary Coded Decimal value to decimal (only the lowest 7 bits).
 fn decode_bcd(input: u8) -> u8 {    
     let digits: u8 = input & 0xf;
     let tens: u8 = (input >> 4) & 0x7;
     10 * tens + digits
     }
 
-/// convert the decimal value to Binary Coded Decimal
+/// Convert the decimal value to Binary Coded Decimal.
 fn encode_bcd(input: u8) -> u8 {
     let digits: u8 = input%10;
     let tens: u8 = input/10;
