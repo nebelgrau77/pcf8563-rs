@@ -1,9 +1,37 @@
-//! # PCF8563
-//! 
-//! This is a platform agnostic Rust driver for the NXP PCF8563 real-time clock,
+//! A platform agnostic Rust driver for the NXP PCF8563 real-time clock,
 //! based on the [`embedded-hal`](https://github.com/japaric/embedded-hal) traits.
+//! 
+//! This driver allows you to:
+//! - read date and time, see [`get_datetime()`]
+//! - set date and time, see [`set_datetime()`]
+//! - set and enable alarms (minutes, hours, day, weekday)
+//! - set and enable timer with variable clock frequency
+//! - enable, disable and clear timer and alarm interrupts
+//! - enable and disable clock output with variable frequency
+//!  
+//! [`get_datetime()`]: struct.PCF8563.html#method.get_datetime
+//! [`set_datetime()`]: struct.PCF8563.html#method.set_datetime
+//! 
+//!## The device
+//! The PCF8563 is a CMOS Real-Time Clock (RTC) and calendar optimized for low power
+//! consumption. A programmable clock output, interrupt output, and voltage-low detector are also provided. All addresses and data are transferred serially via a two-line bidirectional I2C-bus. Maximum bus speed is 400 kbit/s. The register address is incremented automatically after each written or read data byte.
+//! 
+//! Provides year, month, day, weekday, hours, minutes, and seconds based on a 32.768 kHz quartz crystal.
+//! * Century flag
+//! * Low backup current
+//! * Programmable clock output for peripheral devices (32.768 kHz, 1.024 kHz, 32 Hz, and 1 Hz)
+//! * Alarm and timer functions
+//! * Open-drain interrupt pin
+//! 
+//! ### Datasheet: [PCF8563](https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf)
+//! 
+//! ## Usage examples (see also examples folder)
 //!
-//! # Initialization
+//! Please find additional examples using hardware in this repository: [examples]
+//!
+//! [examples]: https://github.com/nebelgrau77/pcf8563-rs/tree/main/examples
+//! 
+//! ### Initialization
 //! 
 //! A new instance of the device is created like this:
 //! 
@@ -25,7 +53,7 @@
 //! It also sets the timer to the lowest possible frequency (1/60 Hz) for power saving.
 //! 
 //! 
-//! # Date and time
+//! ### Date and time
 //!
 //! All the functions regarding setting and reading date and time are defined in the `datetime.rs` module:
 //!
@@ -52,7 +80,7 @@
 //! 
 //! __TO DO__: add description of the century flag
 //! 
-//! # Alarm
+//! ### Alarm
 //!
 //! All the alarm-related functions are defined in the `alarm.rs` module:
 //! 
@@ -85,7 +113,7 @@
 //! rtc.disable_all_alarms().unwrap();
 //! ```
 //!
-//! # Timer
+//! ### Timer
 //! 
 //! All the timer-related functions are defined in the `timer.rs` module
 //!
@@ -113,7 +141,7 @@
 //! rtc.clear_timer_flag().unwrap(); // clear the timer flag
 //! ```
 //! 
-//! # Clock output
+//! ### Clock output
 //! 
 //! All the clock output-related functions are defined in the `clkout.rs` module
 //! 
@@ -134,7 +162,7 @@
 //! rtc.control_clkout(Control::On).unwrap(); // enable the clock output
 //! ``` 
 //! 
-//! # RTC Control
+//! ### RTC Control
 //! All the other control functions are defined in the `control.rs` module
 //! 
 //! - `control_clock()` - starts and stops the internal clock of the RTC
@@ -201,6 +229,7 @@ impl BitFlags {
     }   
 
 const DEVICE_ADDRESS: u8 = 0x51;
+//const DEVICE_ADDRESS: u8 = 0xa2;
 
 /// Two possible choices, used for various enable/disable bit flags
 #[allow(non_camel_case_types)]
