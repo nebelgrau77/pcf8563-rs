@@ -5,8 +5,6 @@
 A platform agnostic Rust driver for the NXP PCF8563 real-time clock,
 based on the [`embedded-hal`] traits.
 
-___NOTE: So far it's only been tested with STM32L4xx-hal.___
-
 [`embedded-hal`]: https://github.com/rust-embedded/embedded-hal
 
 Based on this [RTC driver](https://github.com/eldruin/ds1307-rs) 
@@ -28,6 +26,7 @@ This driver allows you to:
 - [ ] add `get_timer_interrupt_mode` function
 - [ ] add `get_clkout_frequency` function 
 - [ ] add an nRF example
+- [ ] add a Linux example (Rasberry Pi)
 - [ ] publish on crates.io
 
 [How this driver was ~~won~~ written](https://nebelgrau77.github.io/posts/rust_driver/)
@@ -56,8 +55,6 @@ then instantiate the device.
 Please find additional examples using hardware in this repository: [examples]
 
 [examples]: https://github.com/nebelgrau77/pcf8563-rs/tree/main/examples
-
-### add other examples in the folder (NRF, ideally Linux)
 
 ```rust
 #![no_main]
