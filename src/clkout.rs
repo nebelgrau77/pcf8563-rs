@@ -1,6 +1,6 @@
 //! All clock output-related functions will be defined here
 
-use super::{PCF8563, DEVICE_ADDRESS, hal, Error, Register, BitFlags, Control};
+use super::{PCF8563, hal, Error, Register, BitFlags, Control};
 use hal::blocking::i2c::{Write, WriteRead};
 
 /// The four possible clock output frequency settings

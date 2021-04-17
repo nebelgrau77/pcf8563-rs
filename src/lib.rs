@@ -200,7 +200,7 @@ impl Register {
     //const DAYS              : u8 = 0x05;
     //const WEEKDAYS          : u8 = 0x06;
     const CENTURY_MONTHS    : u8 = 0x07;
-    const YEARS             : u8 = 0x08;
+    //const YEARS             : u8 = 0x08;
     const MINUTE_ALARM      : u8 = 0x09;
     const HOUR_ALARM        : u8 = 0x0A;
     const DAY_ALARM         : u8 = 0x0B;

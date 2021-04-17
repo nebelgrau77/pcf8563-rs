@@ -1,7 +1,7 @@
 //! Various functions related to the RTC control that are not specifically 
 //! datetime-, timer-, alarm- or clock output-related will be defined here
 
-use super::{PCF8563, DEVICE_ADDRESS, hal, Error, Register, BitFlags, Control, TimerFreq};
+use super::{PCF8563, hal, Error, Register, BitFlags, Control, TimerFreq};
 use hal::blocking::i2c::{Write, WriteRead};
 
 impl<I2C, E> PCF8563<I2C>
