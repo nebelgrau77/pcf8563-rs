@@ -195,10 +195,10 @@ impl Register {
     const CTRL_STATUS_1     : u8 = 0x00;
     const CTRL_STATUS_2     : u8 = 0x01;
     const VL_SECONDS        : u8 = 0x02;
-    const MINUTES           : u8 = 0x03;
-    const HOURS             : u8 = 0x04;
-    const DAYS              : u8 = 0x05;
-    const WEEKDAYS          : u8 = 0x06;
+    //const MINUTES           : u8 = 0x03;
+    //const HOURS             : u8 = 0x04;
+    //const DAYS              : u8 = 0x05;
+    //const WEEKDAYS          : u8 = 0x06;
     const CENTURY_MONTHS    : u8 = 0x07;
     const YEARS             : u8 = 0x08;
     const MINUTE_ALARM      : u8 = 0x09;
