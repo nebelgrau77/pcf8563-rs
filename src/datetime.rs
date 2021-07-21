@@ -53,11 +53,11 @@ where
             .map_err(Error::I2C)?;
         Ok(DateTime {            
             year: decode_bcd(data[6]),
-            month: decode_bcd(data[5]),
-            weekday: decode_bcd(data[4]) & 0x7, //make sure we get only the bits 2:0
-            day: decode_bcd(data[3]),
-            hours: decode_bcd(data[2]),            
-            minutes: decode_bcd(data[1]),
+            month: decode_bcd(data[5] & 0x1f),
+            weekday: decode_bcd(data[4] & 0x07),
+            day: decode_bcd(data[3] & 0x3f),
+            hours: decode_bcd(data[2] & 0x3f),
+            minutes: decode_bcd(data[1] & 0x7f),
             seconds: decode_bcd(data[0]),
         })
     }
