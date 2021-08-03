@@ -275,7 +275,7 @@ where
 
     /// Write to a register.
     fn write_register(&mut self, register: u8, data: u8) -> Result<(), Error<E>> {
-        let payload: [u8; 2] = [register, data]; //need to figure out sending whole datetime
+        let payload: [u8; 2] = [register, data]; 
         self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
 
@@ -297,7 +297,7 @@ where
     /// Set specific bits.
     fn set_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
-        if (data & bitmask) == 0 { // does it mean that they are different if 0?
+        if (data & bitmask) == 0 { 
             self.write_register(address, data | bitmask)
         } else {
             Ok(())
@@ -307,7 +307,7 @@ where
     /// Clear specific bits.
     fn clear_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
-        if (data & bitmask) != 0 { // what does this mean?
+        if (data & bitmask) != 0 { 
             self.write_register(address, data & !bitmask)
         } else {
             Ok(())

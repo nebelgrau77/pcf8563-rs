@@ -57,7 +57,8 @@ where
         self.is_register_bit_flag_high(Register::CLKOUT_CTRL, BitFlags::FE)
     }
 
-
+    //TO DO:
+    //
     // pub fn get_clkout_frequency()
 
 }

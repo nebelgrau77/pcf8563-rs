@@ -122,11 +122,13 @@ where
         Ok(data[0])
     }
 
+    //TO DO:
+    //
     // pub fn get_timer_interrupt_output()
-
+    //
     // pub fn get_timer_frequency()
-
-    /* USE THIS FOR GET_TIMER_FREQUENCY() ?
+    //
+    /* USE THIS EXAMPLE FOR GET_TIMER_FREQUENCY() ?
    
     pub fn get_square_wave_output_rate(&mut self) -> Result<SQWOUTRateBits, Error<E>> {
         let data = self.read_register(Register::SQWOUT)?;
