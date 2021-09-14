@@ -6,5 +6,5 @@ Cargo.lock
 *.bin
 *.hex
 *.elf
-/examples/stm32/target
+/examples/**/target
 
