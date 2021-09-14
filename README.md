@@ -26,7 +26,6 @@ This driver allows you to:
 - [ ] add `get_timer_interrupt_mode` function
 - [ ] add `get_clkout_frequency` function 
 - [ ] add an nRF example
-- [ ] add a Linux example (Rasberry Pi)
 
 [How this driver was ~~won~~ written](https://nebelgrau77.github.io/posts/rust_driver/)
 
