@@ -10,11 +10,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
-## [0.1.1] - 2021-10-17
+## [0.1.2] - 2021-10-17
+
+### Fixed
+- Error in the month/weekday setting
+
+## [0.1.1] - 2021-07-21
+
+### YANKED FROM CRATES.IO!
 
 ### Fixed
 - Make sure that non relevant bits in the time and date register are ignored before the decoding, following this hint in the datasheet: *Bit positions labelled as x are not relevant. Bit positions labelled with N should always be written with logic 0; if read they could be either logic 0 or logic 1* - fix by [pyaillet](https://github.com/pyaillet)
-- Error in the month setting
+- Error in the month/weekday setting
 
 ## [0.1.0] - 2021-04-05
 
