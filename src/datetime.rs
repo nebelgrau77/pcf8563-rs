@@ -68,7 +68,7 @@ where
     pub fn set_datetime(&mut self, datetime: &DateTime) -> Result<(), Error<E>> {
         if datetime.year > 99 ||
            datetime.month < 1 || datetime.month > 12  ||
-           datetime.month > 6  ||
+           datetime.weekday > 6  ||
            datetime.day < 1 || datetime.month > 31  ||
            datetime.hours > 23  ||
            datetime.minutes > 59  ||
