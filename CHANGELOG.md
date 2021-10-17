@@ -81,6 +81,7 @@ A Raspberry Pi example
 - Enabling/disabling clock output
 - Setting clock output frequency
 
+[0.1.0]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.1.2
 [0.1.0]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.1.0
 [0.0.4]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.4
 [0.0.3]: https://github.com/nebelgrau77/pcf8563-rs/releases/tag/v0.0.3
