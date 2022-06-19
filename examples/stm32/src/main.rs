@@ -70,12 +70,12 @@ fn main() -> ! {
 
     
     let now = DateTime {
-        year: 21, // 2021
-        month: 6, // October
-        weekday: 2, // Sunday
-        day: 4, 
-        hours: 12,
-        minutes: 22,
+        year: 22, // 2022
+        month: 1, // January
+        weekday: 5, // Saturday
+        day: 28, 
+        hours: 22,
+        minutes: 14,
         seconds: 00,
     };
     
