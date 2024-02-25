@@ -182,12 +182,10 @@ use hal::i2c::I2c;
 
 /// All possible errors in this crate
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub enum Error<I2cE>
-where
-    I2cE: embedded_hal::i2c::Error,
+pub enum Error<E>
  {
     /// I2C bus error
-    I2C(I2cE),
+    I2C(E),
     /// Invalid input data
     InvalidInputData,
 }
