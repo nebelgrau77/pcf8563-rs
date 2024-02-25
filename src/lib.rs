@@ -261,9 +261,9 @@ pub use clkout::ClkoutFreq;
 pub use datetime::{DateTime, Time};
 pub use timer::{InterruptOutput, TimerFreq};
 
-impl<I2C> PCF8563<I2C>
+impl<I2C, E> PCF8563<I2C>
 where
-    I2C: embedded_hal::i2c::I2c    
+    I2C: embedded_hal::i2c::I2c<Error = E>, 
 {
     /// Create a new instance of the PCF8563 driver.
     pub fn new(i2c: I2C) -> Self {
@@ -276,13 +276,13 @@ where
     }
 
     /// Write to a register.
-    fn write_register(&mut self, register: u8, data: u8) -> Result<(), Error<I2c::Error>> {
+    fn write_register(&mut self, register: u8, data: u8) -> Result<(), Error<E>> {
         let payload: [u8; 2] = [register, data];
         self.i2c.write(DEVICE_ADDRESS, &payload).map_err(Error::I2C)
     }
 
     /// Read from a register.
-    fn read_register(&mut self, register: u8) -> Result<u8, Error<I2c::Error>> {
+    fn read_register(&mut self, register: u8) -> Result<u8, Error<E>> {
         let mut data = [0];
         self.i2c
             .write_read(DEVICE_ADDRESS, &[register], &mut data)
@@ -291,13 +291,13 @@ where
     }
 
     /// Check if specific bits are set.
-    fn is_register_bit_flag_high(&mut self, address: u8, bitmask: u8) -> Result<bool, Error<I2c::Error>> {
+    fn is_register_bit_flag_high(&mut self, address: u8, bitmask: u8) -> Result<bool, Error<E>> {
         let data = self.read_register(address)?;
         Ok((data & bitmask) != 0)
     }
 
     /// Set specific bits.
-    fn set_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<I2c::Error>> {
+    fn set_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
         if (data & bitmask) == 0 {
             self.write_register(address, data | bitmask)
@@ -307,7 +307,7 @@ where
     }
 
     /// Clear specific bits.
-    fn clear_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<I2c::Error>> {
+    fn clear_register_bit_flag(&mut self, address: u8, bitmask: u8) -> Result<(), Error<E>> {
         let data = self.read_register(address)?;
         if (data & bitmask) != 0 {
             self.write_register(address, data & !bitmask)
