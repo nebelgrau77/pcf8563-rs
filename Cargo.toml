@@ -1,6 +1,6 @@
 [package]
 name = "pcf8563"
-version = "0.1.3"
+version = "0.2.0"
 authors = ["Michal Lasak <nebelgrau77@gmail.com>"]
 edition = "2021"
 description = "Platform-agnostic Rust driver for the NXP PCF8563 real-time clock."

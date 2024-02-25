@@ -21,11 +21,12 @@ This driver allows you to:
 - Read and set various other control functions
 
 ### TO DO:
-- [ ] test with other MCUs
+- [x] test with other MCUs
 - [ ] add `get_timer_frequency` function
 - [ ] add `get_timer_interrupt_mode` function
 - [ ] add `get_clkout_frequency` function 
 - [ ] add an nRF example
+- [ ] add better tests
 
 [How this driver was ~~won~~ written](https://nebelgrau77.github.io/posts/rust_driver/)
 
