@@ -334,7 +334,7 @@ fn encode_bcd(input: u8) -> u8 {
 
 #[cfg(test)]
 mod tests {
-    use embedded_hal_mock as hal;
+    //use embedded_hal_mock as hal;
 
     use super::*;
 
