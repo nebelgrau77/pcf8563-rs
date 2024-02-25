@@ -1,12 +1,12 @@
 //! Various functions related to the RTC control that are not specifically
 //! datetime-, timer-, alarm- or clock output-related will be defined here
 
-use super::{hal, BitFlags, Control, Error, Register, TimerFreq, PCF8563};
-use hal::blocking::i2c::{Write, WriteRead};
+use super::{hal, I2c, BitFlags, Control, Error, Register, TimerFreq, PCF8563};
+
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>, 
 {
     /// Enable or disable external clock test mode.
     pub fn control_ext_clk_test_mode(&mut self, flag: Control) -> Result<(), Error<E>> {

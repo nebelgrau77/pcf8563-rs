@@ -178,7 +178,7 @@
 
 use embedded_hal as hal;
 
-use hal::i2c::{I2c, Operation, SevenBitAddress};
+use hal::i2c::I2c;
 
 /// All possible errors in this crate
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -263,7 +263,7 @@ pub use timer::{InterruptOutput, TimerFreq};
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: embedded_hal::i2c::I2c<Error = E>, 
+    I2C: I2c<Error = E>, 
 {
     /// Create a new instance of the PCF8563 driver.
     pub fn new(i2c: I2C) -> Self {

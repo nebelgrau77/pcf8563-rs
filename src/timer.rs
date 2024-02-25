@@ -1,7 +1,7 @@
 //! All timer-related functions will be defined here
 
-use super::{hal, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563};
-use hal::blocking::i2c::{Write, WriteRead};
+use super::{hal, I2c, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563};
+
 
 /// Four possible timer frequency settings.
 #[allow(non_camel_case_types)]
@@ -37,7 +37,7 @@ pub enum InterruptOutput {
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>, 
 {
     /// Set the timer [0-255]
     pub fn set_timer(&mut self, time: u8) -> Result<(), Error<E>> {

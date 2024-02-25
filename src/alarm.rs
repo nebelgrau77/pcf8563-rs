@@ -5,13 +5,14 @@
 //! TO DO: Keep the enabled/disabled bit when setting the alarm components (minutes, hours, day, weekday)
 
 use super::{
-    decode_bcd, encode_bcd, hal, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563,
+    decode_bcd, encode_bcd, hal, I2c, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563,
 };
-use hal::blocking::i2c::{Write, WriteRead};
+//use embedded_hal as hal;
+//use hal::i2c::I2c;
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>, 
 {
     /// Set the alarm minutes [0-59], keeping the AE bit unchanged.
     pub fn set_alarm_minutes(&mut self, minutes: u8) -> Result<(), Error<E>> {
