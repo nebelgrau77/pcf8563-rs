@@ -8,7 +8,7 @@
 //! - set and enable timer with variable clock frequency
 //! - enable, disable and clear timer and alarm interrupts
 //! - enable and disable clock output with variable frequency
-//!  
+//!
 //! [`get_datetime()`]: struct.PCF8563.html#method.get_datetime
 //! [`set_datetime()`]: struct.PCF8563.html#method.set_datetime
 //!
@@ -60,7 +60,7 @@
 //! - `set_datetime` (sets all the date and time components at once)
 //! - `get_datetime` (reads all the date and time components at once)
 //! - `set_time` (sets only time components, all at once)
-//!  
+//!
 //! ```rust
 //!
 //! let mut rtc = PCF8563::new(i2c);
@@ -178,7 +178,7 @@
 
 use embedded_hal as hal;
 
-use hal::blocking::i2c::{Write, WriteRead};
+use hal::i2c::I2c;
 
 /// All possible errors in this crate
 #[derive(Debug)]
@@ -260,7 +260,7 @@ pub use timer::{InterruptOutput, TimerFreq};
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>,
 {
     /// Create a new instance of the PCF8563 driver.
     pub fn new(i2c: I2C) -> Self {

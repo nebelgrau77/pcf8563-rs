@@ -1,7 +1,7 @@
 //! All clock output-related functions will be defined here
 
 use super::{hal, BitFlags, Control, Error, Register, PCF8563};
-use hal::blocking::i2c::{Write, WriteRead};
+use hal::i2c::I2c;
 
 /// The four possible clock output frequency settings
 #[allow(non_camel_case_types)]
@@ -12,7 +12,7 @@ pub enum ClkoutFreq {
     Clkout_32768Hz = 0b0000_0000,
     /// Set frequency to 1024 Hz.
     Clkout_1024Hz = 0b0000_0001,
-    /// Set frequency to 32 Hz.    
+    /// Set frequency to 32 Hz.
     Clkout_32Hz = 0b0000_0010,
     /// Set frequency to 1 Hz.
     Clkout_1Hz = 0b0000_0011,
@@ -27,7 +27,7 @@ impl ClkoutFreq {
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>,
 {
     /// Set clock output frequency (does not alter the clkout enabled/disabled bit).
     pub fn set_clkout_frequency(&mut self, frequency: ClkoutFreq) -> Result<(), Error<E>> {
