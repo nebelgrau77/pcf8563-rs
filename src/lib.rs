@@ -229,6 +229,7 @@ impl BitFlags {
     const C: u8 = 0b1000_0000; // century flag
 }
 
+//const DEVICE_ADDRESS: u8 = 0x50;
 const DEVICE_ADDRESS: u8 = 0x51;
 //const DEVICE_ADDRESS: u8 = 0xa2;
 
