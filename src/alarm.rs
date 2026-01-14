@@ -136,7 +136,7 @@ where
         self.i2c
             .write_read(DEVICE_ADDRESS, &[Register::MINUTE_ALARM], &mut data)
             .map_err(Error::I2C)?;
-        Ok(decode_bcd(data[0]))
+        Ok(decode_bcd(data[0] & 0b0111_1111))
     }
 
     /// Read the alarm hours setting.
@@ -145,7 +145,7 @@ where
         self.i2c
             .write_read(DEVICE_ADDRESS, &[Register::HOUR_ALARM], &mut data)
             .map_err(Error::I2C)?;
-        Ok(decode_bcd(data[0]))
+        Ok(decode_bcd(data[0] & 0b0011_1111))
     }
 
     /// Read the alarm day setting.
@@ -154,7 +154,7 @@ where
         self.i2c
             .write_read(DEVICE_ADDRESS, &[Register::DAY_ALARM], &mut data)
             .map_err(Error::I2C)?;
-        Ok(decode_bcd(data[0]))
+        Ok(decode_bcd(data[0] & 0b0011_1111))
     }
 
     /// Read the alarm weekday setting.
@@ -163,7 +163,7 @@ where
         self.i2c
             .write_read(DEVICE_ADDRESS, &[Register::WEEKDAY_ALARM], &mut data)
             .map_err(Error::I2C)?;
-        Ok(decode_bcd(data[0]))
+        Ok(decode_bcd(data[0] & 0b0000_0111))
     }
 
     /// Get the alarm flag (if true, alarm event happened).
