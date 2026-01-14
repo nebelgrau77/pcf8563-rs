@@ -27,8 +27,5 @@ maintenance = { status = "actively-developed" }
 [dependencies]
 embedded-hal = "1.0.0"
 
-[dev-dependencies]
-embedded-hal-mock = "0.2"
-
 [profile.release]
 lto = true
