@@ -1,6 +1,6 @@
 //! All timer-related functions will be defined here
 
-use super::{hal, I2c, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563};
+use super::{I2c, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563};
 
 
 /// Four possible timer frequency settings.

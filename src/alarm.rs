@@ -5,7 +5,7 @@
 //! TO DO: Keep the enabled/disabled bit when setting the alarm components (minutes, hours, day, weekday)
 
 use super::{
-    decode_bcd, encode_bcd, hal, I2c, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563,
+    decode_bcd, encode_bcd, I2c, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563,
 };
 //use embedded_hal as hal;
 //use hal::i2c::I2c;

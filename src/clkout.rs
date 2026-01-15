@@ -1,6 +1,6 @@
 //! All clock output-related functions will be defined here
 
-use super::{hal, I2c, BitFlags, Control, Error, Register, PCF8563};
+use super::{I2c, BitFlags, Control, Error, Register, PCF8563};
 
 
 /// The four possible clock output frequency settings

@@ -6,7 +6,7 @@
 //! TO DO: As the chip may be used for devices that are clocks only, without the calendar function
 //! a convenient set_time() function could be added (sets only seconds, minutes and hours)
 
-use super::{decode_bcd, encode_bcd, hal, I2c, BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563};
+use super::{decode_bcd, encode_bcd, I2c, BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563};
 
 
 /// Container to hold date and time components.
