@@ -1,4 +1,4 @@
-/* 
+/*
 talking to the PCF8563 module over I2C
 */
 
@@ -10,7 +10,7 @@ fn main() {
     let i2c = I2c::new().unwrap();
 
     // new RTC instance
-    let mut rtc = PCF8563::new(i2c);    
+    let mut rtc = PCF8563::new(i2c);
 
     // initialize the clock module
     rtc.rtc_init().unwrap();
@@ -62,7 +62,7 @@ fn month_name(datetime: DateTime) -> &'static str  {
         9 => {name = "September"}
         10 => {name = "October"}
         11 => {name = "November"}
-        12 => {name = "December"}        
+        12 => {name = "December"}
         _ => ()
     }
     name

@@ -7,11 +7,11 @@
 use super::{
     decode_bcd, encode_bcd, hal, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563,
 };
-use hal::blocking::i2c::{Write, WriteRead};
+use hal::i2c::I2c;
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>,
 {
     /// Set the alarm minutes [0-59], keeping the AE bit unchanged.
     pub fn set_alarm_minutes(&mut self, minutes: u8) -> Result<(), Error<E>> {
@@ -129,7 +129,7 @@ where
         }
     }
 
-    /// Read the alarm minutes setting.        
+    /// Read the alarm minutes setting.
     pub fn get_alarm_minutes(&mut self) -> Result<u8, Error<E>> {
         let mut data = [0];
         self.i2c

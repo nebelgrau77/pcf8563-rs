@@ -7,7 +7,7 @@
 //! a convenient set_time() function could be added (sets only seconds, minutes and hours)
 
 use super::{decode_bcd, encode_bcd, hal, BitFlags, Error, Register, DEVICE_ADDRESS, PCF8563};
-use hal::blocking::i2c::{Write, WriteRead};
+use hal::i2c::I2c;
 
 /// Container to hold date and time components.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -41,7 +41,7 @@ pub struct Time {
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>,
 {
     /// Read date and time all at once.
     pub fn get_datetime(&mut self) -> Result<DateTime, Error<E>> {

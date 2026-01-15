@@ -1,7 +1,7 @@
 //! All timer-related functions will be defined here
 
 use super::{hal, BitFlags, Control, Error, Register, DEVICE_ADDRESS, PCF8563};
-use hal::blocking::i2c::{Write, WriteRead};
+use hal::i2c::I2c;
 
 /// Four possible timer frequency settings.
 #[allow(non_camel_case_types)]
@@ -12,7 +12,7 @@ pub enum TimerFreq {
     Timer_4096Hz = 0b0000_0000,
     /// Set timer frequency to 64 Hz.
     Timer_64Hz = 0b0000_0001,
-    /// Set timer frequency to 1 Hz.    
+    /// Set timer frequency to 1 Hz.
     Timer_1Hz = 0b0000_0010,
     /// Set timer frequency to 1/60 Hz. This should be used when timer is off to limit energy consumption.
     Timer_1_60Hz = 0b0000_0011,
@@ -37,7 +37,7 @@ pub enum InterruptOutput {
 
 impl<I2C, E> PCF8563<I2C>
 where
-    I2C: Write<Error = E> + WriteRead<Error = E>,
+    I2C: I2c<Error = E>,
 {
     /// Set the timer [0-255]
     pub fn set_timer(&mut self, time: u8) -> Result<(), Error<E>> {
